@@ -1,6 +1,6 @@
 import React from 'react'
 import {Switch, Route} from "react-router";
-import Main from './Main.jsx'
+import Main from './main/Main.jsx'
 import Edit from "./edit/Edit.jsx";
 // import FullCatalog from './catalog/FullCatalog.jsx'
 // import Sight from'./catalog/Sight.jsx'
