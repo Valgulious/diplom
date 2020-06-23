@@ -2,9 +2,30 @@ import React, { useState } from 'react'
 import { Link } from "react-router-dom";
 import Hidden from "./Hidden.jsx";
 
+const defaultForm = {
+    projects: [
+        'Project 1',
+        'Project 2'
+    ],
+    phase: [
+        'Testing',
+        'Calibration'
+    ],
+    settings: [
+        'Default',
+        'Factory'
+    ],
+    contentType: [
+        'Type 1',
+        'Type 2'
+    ]
+}
+
 const Main = () => {
 
     const [hidden, setHidden] = useState(true);
+
+    const [form, setForm] = useState(defaultForm);
 
     return (
         <div className='uk-position-center'>
@@ -22,24 +43,33 @@ const Main = () => {
                             <div className="uk-margin">
                                 <label className="uk-form-label" htmlFor="form-stacked-text">Project</label>
                                 <select className="uk-select">
-                                    <option>Option 01</option>
-                                    <option>Option 02</option>
+                                    {
+                                        form.projects.map((project) => (
+                                            <option value={project}>{project}</option>
+                                        ))
+                                    }
                                 </select>
                             </div>
 
                             <div className="uk-margin">
                                 <label className="uk-form-label" htmlFor="form-stacked-text">Phase</label>
                                 <div className="uk-margin uk-grid-small uk-child-width-auto uk-grid">
-                                    <label><input className="uk-radio" type="radio" name="phase" checked/>Testing</label>
-                                    <label><input className="uk-radio" type="radio" name="phase"/>Calibration</label>
+                                    {
+                                        form.phase.map((phase) => (
+                                            <label><input className="uk-radio" type="radio" name="phase"/>{phase}</label>
+                                        ))
+                                    }
                                 </div>
                             </div>
 
                             <div className="uk-margin">
                                 <label className="uk-form-label" htmlFor="form-stacked-text">Settings</label>
                                 <div className="uk-margin uk-grid-small uk-child-width-auto uk-grid">
-                                    <label><input className="uk-radio" type="radio" name="settings" checked/>Default</label>
-                                    <label><input className="uk-radio" type="radio" name="settings"/>Factory</label>
+                                    {
+                                        form.settings.map((set) => (
+                                            <label><input className="uk-radio" type="radio" name="settings"/>{set}</label>
+                                        ))
+                                    }
                                 </div>
                             </div>
 
@@ -56,8 +86,11 @@ const Main = () => {
                             <div className="uk-margin">
                                 <label className="uk-form-label" htmlFor="form-stacked-text">Content type</label>
                                 <select className="uk-select">
-                                    <option>Option 01</option>
-                                    <option>Option 02</option>
+                                    {
+                                        form.contentType.map((type) => (
+                                            <option value={type}>{type}</option>
+                                        ))
+                                    }
                                 </select>
                             </div>
 
