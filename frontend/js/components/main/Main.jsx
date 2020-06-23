@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from "react-router-dom";
 import Hidden from "./Hidden.jsx";
 
 const Main = () => {
+
+    const [hidden, setHidden] = useState(true);
+
     return (
         <div className='uk-position-center'>
             <div className='uk-margin-bottom'>
@@ -68,10 +71,12 @@ const Main = () => {
                             </div>
 
                             <div className="uk-margin">
-                                <a className="uk-link-muted">Дополнительно</a>
+                                <a className='uk-link-muted' onClick={() => setHidden(!hidden)}>
+                                    {hidden ? <span uk-icon='chevron-down'></span> :
+                                        <span uk-icon='chevron-up'></span>} Дополнительно</a>
                             </div>
 
-                            <Hidden/>
+                            {hidden ? '' : <Hidden/>}
 
                             <p className="uk-text-right">
                                 <button className="uk-button uk-button-default uk-modal-close" type="button">Отмена
