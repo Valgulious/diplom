@@ -1,13 +1,16 @@
 import React from 'react'
 
-const Hidden = () => {
+const Hidden = ({ resourceTypes }) => {
     return(
         <div>
             <div className="uk-margin">
                 <label className="uk-form-label" htmlFor="form-stacked-text">Resource type</label>
                 <select className="uk-select">
-                    <option>Option 01</option>
-                    <option>Option 02</option>
+                    {
+                        resourceTypes.map((type) => (
+                            <option value={type.resource}>{type.resource}</option>
+                        ))
+                    }
                 </select>
             </div>
 

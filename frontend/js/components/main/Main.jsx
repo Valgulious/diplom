@@ -1,23 +1,27 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from "react-router-dom";
 import Hidden from "./Hidden.jsx";
 
 const defaultForm = {
     projects: [
-        'Project 1',
-        'Project 2'
+        {title: 'Project 1'},
+        {title: 'Project 2'}
     ],
-    phase: [
-        'Testing',
-        'Calibration'
+    phases: [
+        {title: 'Testing'},
+        {title: 'Calibration'}
     ],
     settings: [
-        'Default',
-        'Factory'
+        {title: 'Default'},
+        {title: 'Factory'}
     ],
-    contentType: [
-        'Type 1',
-        'Type 2'
+    contentTypes: [
+        {type: 'Type 1'},
+        {type: 'Type 2'}
+    ],
+    resourceTypes: [
+        {resource: 'Resource 1'},
+        {resource: 'Resource 2'}
     ]
 }
 
@@ -26,6 +30,14 @@ const Main = () => {
     const [hidden, setHidden] = useState(true);
 
     const [form, setForm] = useState(defaultForm);
+    useEffect(() => {
+        fetch('http://localhost:8080/api/form')
+            .then(res => res.json())
+            .then(res => {
+                setForm(res)
+            })
+
+    }, []);
 
     return (
         <div className='uk-position-center'>
@@ -45,7 +57,7 @@ const Main = () => {
                                 <select className="uk-select">
                                     {
                                         form.projects.map((project) => (
-                                            <option value={project}>{project}</option>
+                                            <option value={project.title}>{project.title}</option>
                                         ))
                                     }
                                 </select>
@@ -55,8 +67,8 @@ const Main = () => {
                                 <label className="uk-form-label" htmlFor="form-stacked-text">Phase</label>
                                 <div className="uk-margin uk-grid-small uk-child-width-auto uk-grid">
                                     {
-                                        form.phase.map((phase) => (
-                                            <label><input className="uk-radio" type="radio" name="phase"/>{phase}</label>
+                                        form.phases.map((phase) => (
+                                            <label><input className="uk-radio" type="radio" name="phase"/>{phase.title}</label>
                                         ))
                                     }
                                 </div>
@@ -67,7 +79,7 @@ const Main = () => {
                                 <div className="uk-margin uk-grid-small uk-child-width-auto uk-grid">
                                     {
                                         form.settings.map((set) => (
-                                            <label><input className="uk-radio" type="radio" name="settings"/>{set}</label>
+                                            <label><input className="uk-radio" type="radio" name="settings"/>{set.title}</label>
                                         ))
                                     }
                                 </div>
@@ -87,8 +99,8 @@ const Main = () => {
                                 <label className="uk-form-label" htmlFor="form-stacked-text">Content type</label>
                                 <select className="uk-select">
                                     {
-                                        form.contentType.map((type) => (
-                                            <option value={type}>{type}</option>
+                                        form.contentTypes.map((type) => (
+                                            <option value={type.type}>{type.type}</option>
                                         ))
                                     }
                                 </select>
@@ -109,7 +121,12 @@ const Main = () => {
                                         <span uk-icon='chevron-up'></span>} Дополнительно</a>
                             </div>
 
-                            {hidden ? '' : <Hidden/>}
+                            {
+                                hidden ? '' :
+                                    <Hidden
+                                        resourceTypes = {form.resourceTypes}
+                                    />
+                            }
 
                             <p className="uk-text-right">
                                 <button className="uk-button uk-button-default uk-modal-close" type="button">Отмена

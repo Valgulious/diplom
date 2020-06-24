@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/content")
+@RequestMapping("/api/content")
 public class ContentController {
 
     @Autowired
