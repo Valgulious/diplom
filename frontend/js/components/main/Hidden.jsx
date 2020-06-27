@@ -5,7 +5,8 @@ const Hidden = ({ resourceTypes }) => {
         <div>
             <div className="uk-margin">
                 <label className="uk-form-label" htmlFor="form-stacked-text">Resource type</label>
-                <select className="uk-select">
+                <select id="resource" className="uk-select">
+                    <option>Not chosen</option>
                     {
                         resourceTypes.map((type) => (
                             <option value={type.resource}>{type.resource}</option>
@@ -16,27 +17,27 @@ const Hidden = ({ resourceTypes }) => {
 
             <div className="uk-margin">
                 <label className="uk-form-label" htmlFor="form-stacked-text">Color temperature</label>
-                <input className="uk-input" type="number" placeholder="Color temperature" />
+                <input id="color" className="uk-input" type="number" placeholder="Color temperature" />
             </div>
 
             <div className="uk-margin">
                 <label className="uk-form-label" htmlFor="form-stacked-text">AE target</label>
-                <input className="uk-input" type="number" placeholder="AE target" />
+                <input id="ae" className="uk-input" type="number" placeholder="AE target" />
             </div>
 
             <div className="uk-margin">
                 <label className="uk-form-label" htmlFor="form-stacked-text">Sensor gain</label>
-                <input className="uk-input" type="number" placeholder="Sensor gain" />
+                <input id="gain" className="uk-input" type="number" placeholder="Sensor gain" />
             </div>
 
             <div className="uk-margin">
                 <label className="uk-form-label" htmlFor="form-stacked-text">Shutter time</label>
-                <input className="uk-input" type="number" placeholder="Shutter time" />
+                <input id="shutter" className="uk-input" type="number" placeholder="Shutter time" />
             </div>
 
             <div className="uk-margin">
                 <label className="uk-form-label" htmlFor="form-stacked-text">Sensor submode</label>
-                <input className="uk-input" type="number" placeholder="Sensor submode" />
+                <input id="submod" className="uk-input" type="number" placeholder="Sensor submode" />
             </div>
 
             <div className="uk-margin">

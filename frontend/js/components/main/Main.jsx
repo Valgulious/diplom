@@ -39,6 +39,25 @@ const Main = () => {
 
     }, []);
 
+    let handleSubmit = (e) => {
+        e.preventDefault();
+
+        console.log('test');
+
+        let formData = new FormData();
+
+        let project = document.getElementById('project');
+        let test = document.getElementById('test');
+        let phase = document.getElementsByName('phase');
+
+        phase.forEach(element => {
+            if (element.checked) console.log(element.value);
+        })
+
+        console.log(project.value);
+        console.log(phase);
+    }
+
     return (
         <div className='uk-position-center'>
             <div className='uk-margin-bottom'>
@@ -46,7 +65,7 @@ const Main = () => {
             </div>
             <div id="form" uk-modal="">
                 <div className="uk-modal-dialog uk-modal-body">
-                    <form>
+                    <form id="upload" onSubmit={handleSubmit}>
 
                         <fieldset className='uk-fieldset'>
 
@@ -54,7 +73,8 @@ const Main = () => {
 
                             <div className="uk-margin">
                                 <label className="uk-form-label" htmlFor="form-stacked-text">Project</label>
-                                <select className="uk-select">
+                                <select id='project' className="uk-select">
+                                    <option>Not chosen</option>
                                     {
                                         form.projects.map((project) => (
                                             <option value={project.title}>{project.title}</option>
@@ -68,7 +88,10 @@ const Main = () => {
                                 <div className="uk-margin uk-grid-small uk-child-width-auto uk-grid">
                                     {
                                         form.phases.map((phase) => (
-                                            <label><input className="uk-radio" type="radio" name="phase"/>{phase.title}</label>
+                                            <label>
+                                                <input className="uk-radio" type="radio" name="phase" value={phase.title}/>
+                                                {phase.title}
+                                            </label>
                                         ))
                                     }
                                 </div>
@@ -87,17 +110,18 @@ const Main = () => {
 
                             <div className="uk-margin">
                                 <label className="uk-form-label" htmlFor="form-stacked-text">Sensor ID</label>
-                                <input className="uk-input" type="number" placeholder="Sensor ID" />
+                                <input id="sensor" className="uk-input" type="number" placeholder="Sensor ID" />
                             </div>
 
                             <div className="uk-margin">
                                 <label className="uk-form-label" htmlFor="form-stacked-text">Lens ID</label>
-                                <input className="uk-input" type="number" placeholder="Lens ID" />
+                                <input id="lens" className="uk-input" type="number" placeholder="Lens ID" />
                             </div>
 
                             <div className="uk-margin">
                                 <label className="uk-form-label" htmlFor="form-stacked-text">Content type</label>
-                                <select className="uk-select">
+                                <select id="content" className="uk-select">
+                                    <option>Not chosen</option>
                                     {
                                         form.contentTypes.map((type) => (
                                             <option value={type.type}>{type.type}</option>
@@ -108,7 +132,7 @@ const Main = () => {
 
                             <div className="uk-margin">
                                 <div uk-form-custom="">
-                                    <input id='file' type="file" name='file' required/>
+                                    <input id='file' type="file" name='file'/>
                                     <button className="uk-button uk-button-primary" type="button" tabIndex="-1">
                                         Выбрать файл
                                     </button>
