@@ -22,12 +22,19 @@ public class ContentController {
     @Value("${upload.path}")
     private String uploadPath;
 
-//    @RequestMapping(value = "/create", method = RequestMethod.POST)
-//    public String create(@RequestParam("file") MultipartFile file) throws IOException
-//    {
-//        Content content = contentService.saveContent(file);
-//        return content.toString();
-//    }
+    @RequestMapping(method = RequestMethod.POST)
+    public String create(@RequestParam String project,
+                         @RequestParam String phase,
+                         @RequestParam String settings,
+                         @RequestParam String sensorID,
+                         @RequestParam String lensID,
+                         @RequestParam String contentType,
+                         @RequestParam("file") MultipartFile file)
+            throws IOException
+    {
+        Content content = contentService.saveContent(project, phase, settings, sensorID, lensID, contentType, file);
+        return content.toString();
+    }
 
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
     public String getAll() { return "get all"; }

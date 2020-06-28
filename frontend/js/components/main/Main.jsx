@@ -42,20 +42,34 @@ const Main = () => {
     let handleSubmit = (e) => {
         e.preventDefault();
 
-        console.log('test');
-
         let formData = new FormData();
 
         let project = document.getElementById('project');
-        let test = document.getElementById('test');
         let phase = document.getElementsByName('phase');
+        let set = document.getElementsByName('settings');
+        let sensor = document.getElementById('sensor');
+        let lens = document.getElementById('lens');
+        let content = document.getElementById('content');
+        let file = document.getElementById('file');
 
+        formData.append(project.name, project.value);
         phase.forEach(element => {
-            if (element.checked) console.log(element.value);
+            if (element.checked) formData.append(element.name, element.value);
         })
+        set.forEach(element => {
+            if (element.checked) formData.append(element.name, element.value);
+        })
+        formData.append(sensor.name, sensor.value);
+        formData.append(lens.name, lens.value);
+        formData.append(content.name, content.value);
+        formData.append(file.name, file.files[0]);
 
-        console.log(project.value);
-        console.log(phase);
+        fetch('http://localhost:8080/api/content', {
+            method: 'post',
+            body: formData
+        });
+
+        // for (let value of formData.values()) console.log(value);
     }
 
     return (
@@ -73,8 +87,8 @@ const Main = () => {
 
                             <div className="uk-margin">
                                 <label className="uk-form-label" htmlFor="form-stacked-text">Project</label>
-                                <select id='project' className="uk-select">
-                                    <option>Not chosen</option>
+                                <select id='project' name="project" className="uk-select" required>
+                                    <option value="">Not chosen</option>
                                     {
                                         form.projects.map((project) => (
                                             <option value={project.title}>{project.title}</option>
@@ -89,7 +103,12 @@ const Main = () => {
                                     {
                                         form.phases.map((phase) => (
                                             <label>
-                                                <input className="uk-radio" type="radio" name="phase" value={phase.title}/>
+                                                <input className="uk-radio"
+                                                       type="radio"
+                                                       name="phase"
+                                                       value={phase.title}
+                                                       required
+                                                />
                                                 {phase.title}
                                             </label>
                                         ))
@@ -102,7 +121,15 @@ const Main = () => {
                                 <div className="uk-margin uk-grid-small uk-child-width-auto uk-grid">
                                     {
                                         form.settings.map((set) => (
-                                            <label><input className="uk-radio" type="radio" name="settings"/>{set.title}</label>
+                                            <label>
+                                                <input className="uk-radio"
+                                                       type="radio"
+                                                       name="settings"
+                                                       value={set.title}
+                                                       required
+                                                />
+                                                {set.title}
+                                            </label>
                                         ))
                                     }
                                 </div>
@@ -110,18 +137,34 @@ const Main = () => {
 
                             <div className="uk-margin">
                                 <label className="uk-form-label" htmlFor="form-stacked-text">Sensor ID</label>
-                                <input id="sensor" className="uk-input" type="number" placeholder="Sensor ID" />
+                                <input id="sensor"
+                                       className="uk-input"
+                                       name="sensorID"
+                                       type="number"
+                                       placeholder="Sensor ID"
+                                       min="0"
+                                       max="999999"
+                                       required
+                                />
                             </div>
 
                             <div className="uk-margin">
                                 <label className="uk-form-label" htmlFor="form-stacked-text">Lens ID</label>
-                                <input id="lens" className="uk-input" type="number" placeholder="Lens ID" />
+                                <input id="lens"
+                                       className="uk-input"
+                                       name="lensID"
+                                       type="number"
+                                       placeholder="Lens ID"
+                                       min="0"
+                                       max="999999"
+                                       required
+                                />
                             </div>
 
                             <div className="uk-margin">
                                 <label className="uk-form-label" htmlFor="form-stacked-text">Content type</label>
-                                <select id="content" className="uk-select">
-                                    <option>Not chosen</option>
+                                <select id="content" className="uk-select" name="contentType" required>
+                                    <option value="">Not chosen</option>
                                     {
                                         form.contentTypes.map((type) => (
                                             <option value={type.type}>{type.type}</option>
@@ -132,7 +175,7 @@ const Main = () => {
 
                             <div className="uk-margin">
                                 <div uk-form-custom="">
-                                    <input id='file' type="file" name='file'/>
+                                    <input id='file' type="file" name='file' required/>
                                     <button className="uk-button uk-button-primary" type="button" tabIndex="-1">
                                         Выбрать файл
                                     </button>

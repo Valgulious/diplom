@@ -15,6 +15,10 @@ public class Phase {
         this.title = title;
     }
 
+    public String getId() {
+        return id;
+    }
+
     public String getTitle() {
         return title;
     }

@@ -23,6 +23,10 @@ public class Settings {
         this.title = title;
     }
 
+    public String getId() {
+        return id;
+    }
+
     @Override
     public String toString() {
         return "Settings{" +

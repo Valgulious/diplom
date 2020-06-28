@@ -15,6 +15,10 @@ public class ContentType {
         this.type = type;
     }
 
+    public String getId() {
+        return id;
+    }
+
     public String getType() {
         return type;
     }
