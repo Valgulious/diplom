@@ -76,6 +76,7 @@ public class ContentService {
     //Retrieve
     public List<Content> getall() { return contentRepository.findAll(); }
     public List<Content> getByTitle(String title) { return contentRepository.findByTitle(title); }
+    public List<Content> getByProjectID(String id) { return contentRepository.findByProjectID(id); }
 
     //Update
     public Content update(String id,

@@ -1,6 +1,7 @@
 import React from 'react'
-import {Switch, Route} from "react-router";
+import {Switch, Route} from 'react-router';
 import Main from './main/Main.jsx'
+import Project from './project/Project.jsx';
 import Edit from "./edit/Edit.jsx";
 // import FullCatalog from './catalog/FullCatalog.jsx'
 // import Sight from'./catalog/Sight.jsx'
@@ -14,7 +15,8 @@ const Body = () => {
         <div>
             <Switch>
                 <Route exact path='/' component={Main}/>
-                <Route exact path='/edit' component={Edit}/>
+                <Route exact path='/:id' component={Project}/>
+                <Route exact path='/edit/edit' component={Edit}/>
                 {/*<Route exact path='/catalog' component={FullCatalog}/>*/}
                 {/*<Route exact path='/catalog/bytag/:id' component={FullCatalog}/>*/}
                 {/*<Route exact path='/catalog/sights/:id' component={Sight}/>*/}

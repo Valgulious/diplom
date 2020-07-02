@@ -1,24 +1,21 @@
 import React, { useEffect, useState } from 'react'
-import UploadForm from '../forms/UploadForm.jsx';
-import CreateProject from '../forms/CreateProject.jsx';
+import { useParams } from 'react-router';
+import UploadForm from "../forms/UploadForm.jsx";
+import CreateProject from "../forms/CreateProject.jsx";
 
-const Main = () => {
+const Project = () => {
 
-    const [projects, setProjects] = useState([]);
+    const { id } = useParams();
+
+    const [content, setContent] = useState([]);
     useEffect(() => {
-        fetch('http://localhost:8080/api/projects')
+        fetch('http://localhost:8080/api/projects/' + id)
             .then(res => res.json())
             .then(res => {
-                setProjects(res);
+                setContent(res);
+                console.log(res);
             })
     }, []);
-
-    let handleOnDoubleClick = (e) => {
-        window.location = e.target.id;
-    }
-    // function handleOnDoubleClick(id) {
-    //     console.log(id);
-    // }
 
     return(
         <div>
@@ -32,13 +29,13 @@ const Main = () => {
                     </div>
                 </div>
                 <div className='uk-width-expand uk-card uk-card-default uk-card-body uk-margin-right'>
-                    <h3>Projects</h3>
+                    <h3>Project</h3>
                     <div id='projects' className='uk-grid-column-small uk-grid-row-small uk-text-center' uk-grid=''>
                         {
-                            projects.map((project) => (
-                                <div id={project.id} onDoubleClick={handleOnDoubleClick}>
-                                    <span id={project.id} uk-icon='icon: folder; ratio: 3'></span>
-                                    <p id={project.id}>{project.title}</p>
+                            content.map((cont) => (
+                                <div>
+                                    <span uk-icon='icon: file; ratio: 3'></span>
+                                    <p>{cont.title}</p>
                                 </div>
                             ))
                         }
@@ -53,4 +50,4 @@ const Main = () => {
     );
 }
 
-export default Main;
+export default Project;
