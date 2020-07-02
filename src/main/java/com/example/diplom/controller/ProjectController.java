@@ -1,5 +1,6 @@
 package com.example.diplom.controller;
 
+import com.example.diplom.model.Project;
 import com.example.diplom.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -7,12 +8,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/projects")
 public class ProjectController {
 
     @Autowired
     private ProjectService projectService;
+
+    @RequestMapping(method = RequestMethod.GET)
+    public List<Project> getAll() { return projectService.getAll(); }
 
     @RequestMapping(method = RequestMethod.POST)
     public String create (@RequestParam String title) {
