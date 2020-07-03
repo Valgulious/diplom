@@ -9,6 +9,6 @@ import java.util.List;
 @Repository
 public interface ContentRepository extends MongoRepository<Content, String> {
 
-    public List<Content> findByTitle(String Title);
+    public Content findByTitle(String Title);
     public List<Content> findByProjectID (String id);
 }

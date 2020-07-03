@@ -30,6 +30,19 @@ public class Content {
     private String createDate;
     private String downloadLink;
 
+//    public Content (Content content) {
+//        this.title = content.getTitle();
+//        this.projectID = content.getProjectID();
+//        this.phase = content.getPhase();
+//        this.settings = content.getSettings();
+//        this.sensorID = content.getSensorID();
+//        this.lensID = content.getLensID();
+//        this.contentTypeID = content.getContentTypeID();
+//        this.size = content.getSize();
+//        this.createDate = content.getCreateDate();
+//        this.downloadLink = content.getDownloadLink();
+//    }
+
     public Content(String title,
                    String projectID,
                    String phase,
@@ -68,6 +81,14 @@ public class Content {
         this.downloadLink = downloadLink;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -76,11 +97,11 @@ public class Content {
         this.title = title;
     }
 
-    public String getProject() {
+    public String getProjectID() {
         return projectID;
     }
 
-    public void setProject(String project) {
+    public void setProjectID(String project) {
         this.projectID = project;
     }
 

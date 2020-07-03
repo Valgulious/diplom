@@ -10,6 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -39,12 +40,17 @@ public class ContentController {
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)
     public String getAll() { return "get all"; }
 
-    @RequestMapping(value = "/getByTitle", method = RequestMethod.GET)
-    public List<Content> getByTitle(@RequestParam String title)
-    {
-        List<Content> content = contentService.getByTitle(title);
+//    @RequestMapping(value = "/getByTitle", method = RequestMethod.GET)
+//    public List<Content> getByTitle(@RequestParam String title)
+//    {
+//        List<Content> content = contentService.getByTitle(title);
+//
+//        return content;
+//    }
 
-        return content;
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public Content getContentById (@PathVariable String id) {
+        return contentService.getById(id);
     }
 
 }

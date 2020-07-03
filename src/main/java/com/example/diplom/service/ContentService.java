@@ -5,6 +5,7 @@ import com.example.diplom.model.Project;
 import com.example.diplom.repository.*;
 import com.mongodb.MongoClient;
 import com.mongodb.client.MongoClients;
+import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.mongodb.core.MongoOperations;
@@ -18,6 +19,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -44,7 +46,8 @@ public class ContentService {
     @Autowired
     private ContentTypeRepository contentTypeRepository;
 
-    private MongoOperations mongoOps = new MongoTemplate( MongoClients.create(), "systemDB");
+    private MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new MongoClient(), "systemDB"));
+//    private MongoOperations mongoOps = new MongoTemplate( MongoClients.create(), "systemDB");
 
     //Create
     public Content create(String title,
@@ -75,7 +78,22 @@ public class ContentService {
 
     //Retrieve
     public List<Content> getall() { return contentRepository.findAll(); }
-    public List<Content> getByTitle(String title) { return contentRepository.findByTitle(title); }
+
+    public Content getById(String id) {
+
+        Content content = contentRepository.findById(id).get();
+
+        return content;
+    }
+
+    public Content getByTitle(String title) {
+
+        ObjectMapper mapper = new ObjectMapper();
+
+        System.out.println(contentRepository.findByTitle(title).toString());
+
+        return contentRepository.findByTitle(title);
+    }
     public List<Content> getByProjectID(String id) { return contentRepository.findByProjectID(id); }
 
     //Update

@@ -71,7 +71,7 @@ const UploadForm = () => {
     }
 
     return (
-            <div id="form" uk-modal="">
+            <div id="uploadForm" uk-modal="">
                 <div className="uk-modal-dialog uk-modal-body">
                     <form id="upload" onSubmit={handleSubmit}>
 

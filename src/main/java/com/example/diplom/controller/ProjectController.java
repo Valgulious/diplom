@@ -27,7 +27,7 @@ public class ProjectController {
         return projectService.create(title).toString();
     }
 
-    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public List<Content> getContent (@PathVariable String id) {
         return contentService.getByProjectID(id);
     }
