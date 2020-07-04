@@ -39,14 +39,20 @@ const Project = () => {
                 </div>
                 <div className='uk-width-expand uk-card uk-card-default uk-card-body uk-margin-right'>
                     <div className='uk-inline'>
-                        <h3><a href='/' uk-icon="icon: arrow-left"></a>Project</h3>
+                        <h3><a href='/' uk-icon="icon: arrow-left; ratio: 1.5"></a>Project</h3>
                     </div>
                     <div id='projects' className='uk-grid-column-small uk-grid-row-small uk-text-center' uk-grid=''>
                         {
                             content.map((cont) => (
                                 <div onClick={handleOnClick}>
                                     <span uk-icon='icon: file; ratio: 3'></span>
-                                    <p id={cont.id}>{cont.title}</p>
+                                    <p id={cont.id}>
+                                        {
+                                            cont.title.length > 22 ?
+                                                cont.title.substr(0,22) + '...' :
+                                                cont.title
+                                        }
+                                    </p>
                                 </div>
                             ))
                         }

@@ -12,14 +12,14 @@ public class Content {
     private String id;
 
     private String title;
-    private String projectID;
+    private String project;
     private String phase;
     private String settings;
     private Integer sensorID;
     private Integer lensID;
-    private String contentTypeID;
-    private List<String> contentTypeTagID;
-    private String resourceTypeID;
+    private String contentType;
+    private List<String> contentTypeTags;
+    private String resourceType;
     private Integer colorTemperature;
     private Integer aeTarget;
     private Integer sensorGain;
@@ -30,28 +30,15 @@ public class Content {
     private String createDate;
     private String downloadLink;
 
-//    public Content (Content content) {
-//        this.title = content.getTitle();
-//        this.projectID = content.getProjectID();
-//        this.phase = content.getPhase();
-//        this.settings = content.getSettings();
-//        this.sensorID = content.getSensorID();
-//        this.lensID = content.getLensID();
-//        this.contentTypeID = content.getContentTypeID();
-//        this.size = content.getSize();
-//        this.createDate = content.getCreateDate();
-//        this.downloadLink = content.getDownloadLink();
-//    }
-
     public Content(String title,
-                   String projectID,
+                   String project,
                    String phase,
                    String settings,
                    Integer sensorID,
                    Integer lensID,
-                   String contentTypeID,
-                   /*List<String> contentTypeTagID,
-                   String resourceTypeID,
+                   String contentType,
+                   /*List<String> contentTypeTags,
+                   String resourceType,
                    Integer colorTemperature,
                    Integer aeTarget,
                    Integer sensorGain,
@@ -62,14 +49,14 @@ public class Content {
                    String createDate,
                    String downloadLink) {
         this.title = title;
-        this.projectID = projectID;
+        this.project = project;
         this.phase = phase;
         this.settings = settings;
         this.sensorID = sensorID;
         this.lensID = lensID;
-        this.contentTypeID = contentTypeID;
-        /*this.contentTypeTagID = contentTypeTagID;
-        this.resourceTypeID = resourceTypeID;
+        this.contentType = contentType;
+        /*this.contentTypeTags = contentTypeTags;
+        this.resourceType = resourceType;
         this.colorTemperature = colorTemperature;
         this.aeTarget = aeTarget;
         this.sensorGain = sensorGain;
@@ -97,12 +84,12 @@ public class Content {
         this.title = title;
     }
 
-    public String getProjectID() {
-        return projectID;
+    public String getProject() {
+        return project;
     }
 
-    public void setProjectID(String project) {
-        this.projectID = project;
+    public void setProject(String project) {
+        this.project = project;
     }
 
     public String getPhase() {
@@ -137,28 +124,28 @@ public class Content {
         this.lensID = lensID;
     }
 
-    public String getContentTypeID() {
-        return contentTypeID;
+    public String getContentType() {
+        return contentType;
     }
 
-    public void setContentTypeID(String contentTypeID) {
-        this.contentTypeID = contentTypeID;
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
     }
 
-    public List<String> getContentTypeTagID() {
-        return contentTypeTagID;
+    public List<String> getContentTypeTags() {
+        return contentTypeTags;
     }
 
-    public void setContentTypeTagID(List<String> contentTypeTagID) {
-        this.contentTypeTagID = contentTypeTagID;
+    public void setContentTypeTags(List<String> contentTypeTags) {
+        this.contentTypeTags = contentTypeTags;
     }
 
-    public String getResourceTypeID() {
-        return resourceTypeID;
+    public String getResourceType() {
+        return resourceType;
     }
 
-    public void setResourceTypeID(String resourceTypeID) {
-        this.resourceTypeID = resourceTypeID;
+    public void setResourceType(String resourceType) {
+        this.resourceType = resourceType;
     }
 
     public Integer getColorTemperature() {
@@ -238,14 +225,14 @@ public class Content {
         return "Content{" +
                 "id='" + id + '\'' +
                 ", title='" + title + '\'' +
-                ", projectID='" + projectID + '\'' +
+                ", project='" + project + '\'' +
                 ", phase='" + phase + '\'' +
                 ", settings='" + settings + '\'' +
                 ", sensorID=" + sensorID +
                 ", lensID=" + lensID +
-                ", contentTypeID='" + contentTypeID + '\'' +
-                ", contentTypeTagID=" + contentTypeTagID +
-                ", resourceTypeID='" + resourceTypeID + '\'' +
+                ", contentTypeID='" + contentType + '\'' +
+                ", contentTypeTagID=" + contentTypeTags +
+                ", resourceTypeID='" + resourceType + '\'' +
                 ", colorTemperature=" + colorTemperature +
                 ", aeTarget=" + aeTarget +
                 ", sensorGain=" + sensorGain +

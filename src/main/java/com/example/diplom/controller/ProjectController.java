@@ -29,7 +29,7 @@ public class ProjectController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public List<Content> getContent (@PathVariable String id) {
-        return contentService.getByProjectID(id);
+        return contentService.getByProject(id);
     }
 
 }

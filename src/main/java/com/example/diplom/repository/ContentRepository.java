@@ -10,5 +10,5 @@ import java.util.List;
 public interface ContentRepository extends MongoRepository<Content, String> {
 
     public Content findByTitle(String Title);
-    public List<Content> findByProjectID (String id);
+    public List<Content> findByProject (String id);
 }

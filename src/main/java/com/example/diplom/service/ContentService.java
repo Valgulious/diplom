@@ -19,8 +19,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class ContentService {
@@ -83,18 +81,31 @@ public class ContentService {
 
         Content content = contentRepository.findById(id).get();
 
+        String project = projectRepository.findById(content.getProject()).get().getTitle();
+        String phase = phaseRepository.findById(content.getPhase()).get().getTitle();
+        String settings = settingsRepository.findById(content.getSettings()).get().getTitle();
+        String contentType = contentTypeRepository.findById(content.getContentType()).get().getType();
+
+        content.setProject(project);
+        content.setPhase(phase);
+        content.setSettings(settings);
+        content.setContentType(contentType);
+
         return content;
+    }
+
+    public File getFileFor(String id) {
+
+        Content content = contentRepository.findById(id).get();
+
+        return new File(uploadPath + content.getTitle());
     }
 
     public Content getByTitle(String title) {
 
-        ObjectMapper mapper = new ObjectMapper();
-
-        System.out.println(contentRepository.findByTitle(title).toString());
-
         return contentRepository.findByTitle(title);
     }
-    public List<Content> getByProjectID(String id) { return contentRepository.findByProjectID(id); }
+    public List<Content> getByProject(String id) { return contentRepository.findByProject(id); }
 
     //Update
     public Content update(String id,
