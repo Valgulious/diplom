@@ -17,6 +17,7 @@ const Project = () => {
             })
     }, []);
 
+    const [flag, setFlag] = useState(true);
     const [visible, setVisible] = useState(false);
     const [contentId, setContentId] = useState('');
 
@@ -34,6 +35,22 @@ const Project = () => {
     let handleOnClick = (e) => {
         setVisible(true);
         setContentId(e.target.id);
+        console.log('click');
+    }
+
+    let handleOnClickDiv = () => {
+        if (flag) {
+            setVisible(false);
+            console.log('click div');
+        }
+    }
+
+    let handleOnMouseOver = () => {
+        setFlag(false);
+    }
+
+    let handleOnMouseOut = () => {
+        setFlag(true);
     }
 
     let handleClickDeleteProject = () => {

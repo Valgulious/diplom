@@ -10,9 +10,12 @@ public class Project {
     private String id;
 
     private String title;
+    private String createDate;
 
-    public Project(String title) {
+    public Project(String title, String createDate) {
+
         this.title = title;
+        this.createDate = createDate;
     }
 
     public String getId() {
@@ -25,6 +28,14 @@ public class Project {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(String createDate) {
+        this.createDate = createDate;
     }
 
     @Override
