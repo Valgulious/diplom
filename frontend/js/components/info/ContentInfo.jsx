@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 
-const ContentInfo = ({ id }) => {
+const ContentInfo = ({ id, projectReload }) => {
 
     const [content, setContent] = useState({});
     useEffect(() => {
@@ -16,6 +16,15 @@ const ContentInfo = ({ id }) => {
         download(content.downloadLink);
     }
 
+    let handleClickDelete = () => {
+        fetch('http://localhost:8080/api/content/' + id, {method: 'delete'})
+            .then(res => {
+                if (res.status === 200) {
+                    projectReload()
+                }
+            })
+    }
+
     return(
         <div className='uk-card uk-card-default'>
             <div className='uk-card-header'>
@@ -24,7 +33,7 @@ const ContentInfo = ({ id }) => {
                         <span className='uk-link' uk-icon="download" onClick={handleClickDownload}></span>
                     </div>
                     <div>
-                        <span className='uk-link' uk-icon="trash"></span>
+                        <span className='uk-link' uk-icon="trash" onClick={handleClickDelete}></span>
                     </div>
                 </div>
             </div>

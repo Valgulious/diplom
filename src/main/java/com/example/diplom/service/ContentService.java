@@ -128,7 +128,11 @@ public class ContentService {
     public void deleteAll() { contentRepository.deleteAll(); }
     public void deleteById(String id)
     {
-        Content content = mongoOps.findById(id, Content.class);
+        Content content = contentRepository.findById(id).get();
+
+        File file = new File(uploadPath + content.getTitle());
+        file.delete();
+
         contentRepository.delete(content);
     }
 
