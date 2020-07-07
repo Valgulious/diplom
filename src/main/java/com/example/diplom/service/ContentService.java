@@ -1,9 +1,10 @@
 package com.example.diplom.service;
 
-import com.example.diplom.model.Content;
-import com.example.diplom.model.Project;
+import com.example.diplom.model.*;
 import com.example.diplom.repository.*;
 import com.mongodb.MongoClient;
+import com.mongodb.MongoCredential;
+import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoClients;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +12,17 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoDbFactory;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -44,8 +50,9 @@ public class ContentService {
     @Autowired
     private ContentTypeRepository contentTypeRepository;
 
-    private MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new MongoClient(), "systemDB"));
+//    private MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new MongoClient(), "systemDB"));
 //    private MongoOperations mongoOps = new MongoTemplate( MongoClients.create(), "systemDB");
+
 
     //Create
     public Content create(String title,
@@ -75,7 +82,7 @@ public class ContentService {
     }
 
     //Retrieve
-    public List<Content> getall() { return contentRepository.findAll(); }
+    public List<Content> getAll() { return contentRepository.findAll(); }
 
     public Content getById(String id) {
 
@@ -107,6 +114,61 @@ public class ContentService {
     }
     public List<Content> getByProject(String id) { return contentRepository.findByProject(id); }
 
+    public List<Content> getByCriteria(String searchProject,
+                                       String searchPhase,
+                                       String searchSettings,
+                                       String searchSensor,
+                                       String searchLens,
+                                       String searchContent )
+    {
+
+        Query query = new Query();
+
+        if (!searchProject.equals("")) {
+            Project project = projectRepository.findByTitle(searchProject);
+            query.addCriteria(Criteria.where("project").is(project.getId()));
+        }
+
+        if (!searchPhase.equals("")) {
+            Phase phase = phaseRepository.findByTitle(searchPhase);
+            query.addCriteria(Criteria.where("phase").is(phase.getId()));
+        }
+
+        if (!searchSettings.equals("")) {
+            Settings settings = settingsRepository.findByTitle(searchSettings);
+            query.addCriteria(Criteria.where("settings").is(settings.getId()));
+        }
+
+        if (!searchSensor.equals("")) {
+            Integer sensor = Integer.parseInt(searchSensor);
+            query.addCriteria(Criteria.where("sensorID").is(sensor));
+        }
+
+        if (!searchLens.equals("")) {
+            Integer lens = Integer.parseInt(searchLens);
+            query.addCriteria(Criteria.where("lensID").is(lens));
+        }
+
+        if (!searchContent.equals("")) {
+            ContentType contentType = contentTypeRepository.findByType(searchContent);
+            query.addCriteria(Criteria.where("contentType").is(contentType.getId()));
+        }
+
+        char[] pass = {'5', '0', '4', '4', '6', '2', 'd', 'f'};
+
+        ServerAddress serverAddress = new ServerAddress("127.0.0.1", 27017);
+        MongoCredential mongoCredential = MongoCredential.createCredential("systemAdmin", "systemDB", pass);
+        List<MongoCredential> mongoCredentials = new ArrayList<MongoCredential>();
+        mongoCredentials.add(mongoCredential);
+
+
+        final MongoTemplate mongoTemplate = new MongoTemplate(new MongoClient(serverAddress, mongoCredentials), "systemDB");
+
+
+        return mongoTemplate.find(query, Content.class);
+
+    }
+
     //Update
     public Content update(String id,
                           String title,
@@ -114,7 +176,7 @@ public class ContentService {
                           String createDate,
                           String downloadLink)
     {
-        Content content = mongoOps.findById(id, Content.class);
+        Content content = contentRepository.findById(id).get();
 
         content.setTitle(title);
         content.setSize(size);

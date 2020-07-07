@@ -77,7 +77,7 @@ const UploadForm = () => {
 
                         <fieldset className='uk-fieldset'>
 
-                            <legend className="uk-legend">Добавление контента</legend>
+                            <legend className="uk-legend">Upload content</legend>
 
                             <div className="uk-margin">
                                 <label className="uk-form-label" htmlFor="form-stacked-text">Project</label>
@@ -184,15 +184,15 @@ const UploadForm = () => {
                                 <div uk-form-custom="">
                                     <input id='file' type="file" name='file' required/>
                                     <button className="uk-button uk-button-primary" type="button" tabIndex="-1">
-                                        Выбрать файл
+                                        Add files
                                     </button>
                                 </div>
                             </div>
 
                             <p className="uk-text-right">
-                                <button className="uk-button uk-button-default uk-modal-close" type="button">Отмена
+                                <input className='uk-button uk-button-primary' type="submit" value='Upload'/>
+                                <button className="uk-button uk-button-default uk-modal-close" type="button">Cancel
                                 </button>
-                                <input className='uk-button uk-button-primary' type="submit" value='Добавить'/>
                             </p>
 
                         </fieldset>

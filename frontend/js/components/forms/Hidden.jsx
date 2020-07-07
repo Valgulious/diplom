@@ -43,7 +43,7 @@ const Hidden = ({ resourceTypes }) => {
             <div className="uk-margin">
                 <label className="uk-form-label" htmlFor="form-stacked-text">Comment</label>
                 <textarea id='desc' className="uk-textarea" name='comment' rows="5"
-                                             placeholder="Комментарий" required></textarea>
+                                             placeholder="Комментарий"></textarea>
             </div>
 
         </div>

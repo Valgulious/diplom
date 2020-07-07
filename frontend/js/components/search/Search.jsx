@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import SearchForm from "../forms/SearchForm.jsx";
 
 const Search = () => {
 
@@ -11,7 +12,7 @@ const Search = () => {
         if (!e.target.value) {
             setVisible(false);
         } else {
-            fetch('http://localhost:8080/api/projects/findByTitle?title=' + e.target.value)
+            fetch('http://localhost:8080/api/search/findByTitle?title=' + e.target.value)
                 .then(res => res.json())
                 .then(res => {
                     setProjects(res);
@@ -20,9 +21,8 @@ const Search = () => {
             setVisible(true);
             setValue(e.target.value);
         }
-
-
     }
+
 
     return(
         <div className='uk-margin-small-top uk-margin-small-bottom' uk-grid=''>
@@ -47,7 +47,8 @@ const Search = () => {
                             }
                         </div> : ''
                     }
-                    <a className='uk-link-text'>Advanced search</a>
+                    <a className='uk-link-text' uk-toggle="target: #searchForm">Advanced search</a>
+                    <SearchForm/>
                 </div>
             </div>
         </div>

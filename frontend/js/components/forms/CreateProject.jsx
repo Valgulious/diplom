@@ -21,7 +21,7 @@ const CreateProject = () => {
     return(
         <div id="createProject" uk-modal=''>
             <div className="uk-modal-dialog uk-modal-body">
-                <form id="upload" onSubmit={handleSubmit}>
+                <form id="create" onSubmit={handleSubmit}>
 
                     <fieldset className='uk-fieldset'>
 
