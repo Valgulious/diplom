@@ -70,7 +70,7 @@ const Project = () => {
     return(
         <div>
             <div uk-grid=''>
-                <div className='uk-width-1-4 uk-text-center uk-margin-left uk-margin-right'>
+                <div className='uk-width-1-6 uk-text-center uk-margin-left uk-margin-right'>
                     <div className='uk-margin-bottom'>
                         <button className="uk-button uk-button-primary" uk-toggle="target: #uploadForm">Upload</button>
                     </div>
@@ -86,12 +86,18 @@ const Project = () => {
 
                     </h3>
                     <div uk-dropdown="mode: click">
-                        <a className='uk-link-text' href={'http://localhost:8080/api/projects/download/' + id}>
-                            <span uk-icon="download"></span> Download project
-                        </a>
-                        <a href='/' className='uk-link-text' onClick={handleClickDeleteProject}>
-                            <span uk-icon="trash"></span> Delete project
-                        </a>
+                        <ul className='uk-nav uk-dropdown-nav'>
+                            <li>
+                                <a className='uk-link-text' href={'http://localhost:8080/api/projects/download/' + id}>
+                                    <span uk-icon="download"></span> Download project
+                                </a>
+                            </li>
+                            <li>
+                                <a href='/' className='uk-link-text' onClick={handleClickDeleteProject}>
+                                    <span uk-icon="trash"></span> Delete project
+                                </a>
+                            </li>
+                        </ul>
                     </div>
                     <div id='projects' className='uk-grid-column-small uk-grid-row-small uk-text-center' uk-grid=''>
                         {

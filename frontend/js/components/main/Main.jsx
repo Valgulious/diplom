@@ -27,12 +27,9 @@ const Main = () => {
     let handleOnDoubleClick = (e) => {
         window.location = e.target.id;
     }
-    // function handleOnDoubleClick(id) {
-    //     console.log(id);
-    // }
 
     let mainReload = () => {
-        setVis(false);
+        setVisible(false);
         fetch('http://localhost:8080/api/projects')
             .then(res => res.json())
             .then(res => {
@@ -43,12 +40,16 @@ const Main = () => {
     return(
         <div>
             <div uk-grid=''>
-                <div className='uk-width-1-4 uk-text-center uk-margin-left uk-margin-right'>
+                <div className='uk-width-1-6 uk-text-center uk-margin-left uk-margin-right'>
                     <div className='uk-margin-bottom'>
-                        <button className="uk-button uk-button-primary" uk-toggle="target: #uploadForm">Upload</button>
+                        <button className="uk-button uk-button-primary" uk-toggle="target: #uploadForm">
+                            <span uk-icon='icon: upload'></span> Upload
+                        </button>
                     </div>
                     <div className='uk-margin-bottom'>
-                        <button className='uk-button uk-button-default' uk-toggle='target: #createProject'>Create project</button>
+                        <button className='uk-button uk-button-default' uk-toggle='target: #createProject'>
+                            <span uk-icon='icon:  plus-circle'></span> Create project
+                        </button>
                     </div>
                     {
                         visible ? <ProjectInfo id={projectId} mainReload={mainReload}/> : ''

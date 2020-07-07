@@ -34,6 +34,11 @@ public class ProjectController {
     @RequestMapping(method = RequestMethod.GET)
     public List<Project> getAll() { return projectService.getAll(); }
 
+    @RequestMapping(value = "/findByTitle", method = RequestMethod.GET)
+    public List<Project> findByTitle(@RequestParam String title) {
+        return projectService.findByTitleStartingWith(title);
+    }
+
     @RequestMapping(method = RequestMethod.POST)
     public String create (@RequestParam String title) {
         return projectService.create(title).toString();

@@ -21,10 +21,12 @@ public class ProjectService {
 
     public List<Project> getAll() { return projectRepository.findAll(); }
 
+    public List<Project> findByTitleStartingWith(String title) { return projectRepository.findByTitleStartingWith(title); }
+
     public Project create (String title) {
 
         Date dateNow = new Date();
-        SimpleDateFormat formatForDateNow = new SimpleDateFormat("dd.MM.yyyy hh:mm");
+        SimpleDateFormat formatForDateNow = new SimpleDateFormat("dd.MM.yyyy");
         String createDate = formatForDateNow.format(dateNow);
 
         return  projectRepository.save(new Project(title, createDate));

@@ -3,6 +3,7 @@ import {Switch, Route} from 'react-router';
 import Main from './main/Main.jsx'
 import Project from './project/Project.jsx';
 import Edit from "./edit/Edit.jsx";
+import Search from "./search/Search.jsx";
 // import FullCatalog from './catalog/FullCatalog.jsx'
 // import Sight from'./catalog/Sight.jsx'
 // import Routes from './routes/Routes.jsx'
@@ -13,6 +14,7 @@ import Edit from "./edit/Edit.jsx";
 const Body = () => {
     return (
         <div>
+            <Search/>
             <Switch>
                 <Route exact path='/' component={Main}/>
                 <Route exact path='/:id' component={Project}/>

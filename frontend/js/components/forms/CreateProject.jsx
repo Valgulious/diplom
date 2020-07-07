@@ -14,6 +14,10 @@ const CreateProject = () => {
         });
     }
 
+    let handleOnChange = () => {
+
+    }
+
     return(
         <div id="createProject" uk-modal=''>
             <div className="uk-modal-dialog uk-modal-body">
