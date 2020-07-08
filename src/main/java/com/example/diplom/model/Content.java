@@ -37,14 +37,14 @@ public class Content {
                    Integer sensorID,
                    Integer lensID,
                    String contentType,
-                   /*List<String> contentTypeTags,
+//                   List<String> contentTypeTags,
                    String resourceType,
                    Integer colorTemperature,
                    Integer aeTarget,
                    Integer sensorGain,
                    Float shutterTime,
                    Integer sensorSubmod,
-                   String comment,*/
+                   String comment,
                    Long size,
                    String createDate,
                    String downloadLink) {
@@ -55,17 +55,18 @@ public class Content {
         this.sensorID = sensorID;
         this.lensID = lensID;
         this.contentType = contentType;
-        /*this.contentTypeTags = contentTypeTags;
+//        this.contentTypeTags = contentTypeTags;
         this.resourceType = resourceType;
         this.colorTemperature = colorTemperature;
         this.aeTarget = aeTarget;
         this.sensorGain = sensorGain;
         this.shutterTime = shutterTime;
         this.sensorSubmod = sensorSubmod;
-        this.comment = comment;*/
+        this.comment = comment;
         this.size = size;
         this.createDate = createDate;
         this.downloadLink = downloadLink;
+//        System.out.println("constructor");
     }
 
     public String getId() {

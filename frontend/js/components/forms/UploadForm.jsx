@@ -51,6 +51,13 @@ const UploadForm = () => {
         let lens = document.getElementById('lens');
         let content = document.getElementById('content');
         let file = document.getElementById('file');
+        // let resource = document.getElementById('hiddenResource');
+        // let color = document.getElementById('hiddenColor');
+        // let ae = document.getElementById('hiddenAE');
+        // let gain = document.getElementById('hiddenGain');
+        // let shutter = document.getElementById('hiddenShutter');
+        // let submod = document.getElementById('hiddenSubmod');
+        // let comment = document.getElementById('hiddenComment');
 
         formData.append(project.name, project.value);
         phase.forEach(element => {
@@ -62,12 +69,61 @@ const UploadForm = () => {
         formData.append(sensor.name, sensor.value);
         formData.append(lens.name, lens.value);
         formData.append(content.name, content.value);
-        formData.append(file.name, file.files[0]);
+
+        console.log(file.files);
+
+        for (const f of file.files ) {
+            formData.append(file.name, f);
+        }
+
+        if (sessionStorage.getItem('hiddenResource')) {
+            formData.append('resourceType', sessionStorage.getItem('hiddenResource'));
+        } else {
+            formData.append('resourceType', '');
+        }
+
+        if (sessionStorage.getItem('hiddenColor')) {
+            formData.append('colorTemperature', sessionStorage.getItem('hiddenColor'));
+        } else {
+            formData.append('colorTemperature', '');
+        }
+
+        if (sessionStorage.getItem('hiddenAE')) {
+            formData.append('aeTarget', sessionStorage.getItem('hiddenAE'));
+        } else {
+            formData.append('aeTarget', '');
+        }
+
+        if (sessionStorage.getItem('hiddenGain')) {
+            formData.append('sensorGain', sessionStorage.getItem('hiddenGain'));
+        } else {
+            formData.append('sensorGain', '');
+        }
+
+        if (sessionStorage.getItem('hiddenShutter')) {
+            formData.append('shutterTime', sessionStorage.getItem('hiddenShutter'));
+        } else {
+            formData.append('shutterTime', '');
+        }
+
+        if (sessionStorage.getItem('hiddenSubmod')) {
+            formData.append('sensorSubmod', sessionStorage.getItem('hiddenSubmod'));
+        } else {
+            formData.append('sensorSubmod', '');
+        }
+
+        if (sessionStorage.getItem('hiddenComment')) {
+            formData.append('comment', sessionStorage.getItem('hiddenComment'));
+        } else {
+            formData.append('comment', '');
+        }
 
         fetch('http://localhost:8080/api/content', {
             method: 'post',
             body: formData
         });
+
+        sessionStorage.clear();
     }
 
     return (
@@ -182,7 +238,7 @@ const UploadForm = () => {
 
                             <div className="uk-margin">
                                 <div uk-form-custom="">
-                                    <input id='file' type="file" name='file' required/>
+                                    <input id='file' type="file" name='files[]' multiple required/>
                                     <button className="uk-button uk-button-primary" type="button" tabIndex="-1">
                                         Add files
                                     </button>

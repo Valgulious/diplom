@@ -34,6 +34,11 @@ public class ProjectController {
     @RequestMapping(method = RequestMethod.GET)
     public List<Project> getAll() { return projectService.getAll(); }
 
+    @RequestMapping(value = "/byTitle", method = RequestMethod.GET)
+    public boolean getByTitle(@RequestParam String title) {
+        return projectService.findByTitle(title) != null;
+    }
+
 
     @RequestMapping(method = RequestMethod.POST)
     public String create (@RequestParam String title) {
@@ -69,7 +74,7 @@ public class ProjectController {
         for (Content content : contents) {
             //new zip entry and copying inputstream with file to zipOutputStream, after all closing streams
 
-            File file = new File(uploadPath + content.getTitle());
+            File file = new File(uploadPath + project.getTitle() + "/" + content.getTitle());
 
             zipOutputStream.putNextEntry(new ZipEntry(file.getName()));
             FileInputStream fileInputStream = new FileInputStream(file);

@@ -39,7 +39,7 @@ const SearchForm = () => {
     let handleSubmit = (e) => {
         e.preventDefault();
 
-        localStorage.clear();
+        sessionStorage.clear();
 
         let project = document.getElementById('searchProject');
         let phase = document.getElementsByName('searchPhase');
@@ -48,26 +48,42 @@ const SearchForm = () => {
         let lens = document.getElementById('searchLens');
         let content = document.getElementById('searchContent');
 
-        localStorage.setItem(project.name, project.value);
+        let resource = document.getElementById('hiddenResource');
+        let color = document.getElementById('hiddenColor');
+        let ae = document.getElementById('hiddenAE');
+        let gain = document.getElementById('hiddenGain');
+        let shutter = document.getElementById('hiddenShutter');
+        let submod = document.getElementById('hiddenSubmod');
+
+
+        sessionStorage.setItem(project.name, project.value);
         phase.forEach(element => {
-            if (element.checked) localStorage.setItem(element.name, element.value);
+            if (element.checked) sessionStorage.setItem(element.name, element.value);
         })
 
         if (!localStorage.getItem('searchPhase')) {
-            localStorage.setItem('searchPhase', '');
+            sessionStorage.setItem('searchPhase', '');
         }
 
         set.forEach(element => {
-            if (element.checked) localStorage.setItem(element.name, element.value);
+            if (element.checked) sessionStorage.setItem(element.name, element.value);
         })
 
-        if (!localStorage.getItem('searchSettings')) {
-            localStorage.setItem('searchSettings', '');
+        if (!sessionStorage.getItem('searchSettings')) {
+            sessionStorage.setItem('searchSettings', '');
         }
 
-        localStorage.setItem(sensor.name, sensor.value);
-        localStorage.setItem(lens.name, lens.value);
-        localStorage.setItem(content.name, content.value);
+        sessionStorage.setItem(sensor.name, sensor.value);
+        sessionStorage.setItem(lens.name, lens.value);
+        sessionStorage.setItem(content.name, content.value);
+
+        sessionStorage.setItem('searchResource', resource.value);
+        sessionStorage.setItem('searchColor', color.value);
+        sessionStorage.setItem('searchAE', ae.value);
+        sessionStorage.setItem('searchGain', gain.value);
+        sessionStorage.setItem('searchShutter', shutter.value);
+        sessionStorage.setItem('searchSubmod', submod.value);
+
         window.location = '/search';
     }
 

@@ -50,6 +50,9 @@ public class ContentService {
     @Autowired
     private ContentTypeRepository contentTypeRepository;
 
+    @Autowired
+    private ResourceTypeRepository resourceTypeRepository;
+
 //    private MongoOperations mongoOps = new MongoTemplate(new SimpleMongoDbFactory(new MongoClient(), "systemDB"));
 //    private MongoOperations mongoOps = new MongoTemplate( MongoClients.create(), "systemDB");
 
@@ -62,11 +65,18 @@ public class ContentService {
                           String sensorID,
                           String lensID,
                           String contentType,
+                          String resourceType,
+                          String colorTemperature,
+                          String aeTarget,
+                          String sensorGain,
+                          String shutterTime,
+                          String sensorSubmod,
+                          String comment,
                           Long size,
                           String downloadLink)
     {
         Date dateNow = new Date();
-        SimpleDateFormat formatForDateNow = new SimpleDateFormat("dd.MM.yyyy hh:mm");
+        SimpleDateFormat formatForDateNow = new SimpleDateFormat("dd.MM.yyyy");
         String createDate = formatForDateNow.format(dateNow);
         String projectID = projectRepository.findByTitle(project).getId();
         String phaseID = phaseRepository.findByTitle(phase).getId();
@@ -76,9 +86,56 @@ public class ContentService {
         Integer sensor = Integer.parseInt(sensorID);
         Integer lens = Integer.parseInt(lensID);
 
+        String resource;
+        Integer color;
+        Integer ae;
+        Integer gain;
+        Float time;
+        Integer submod;
+
+        if (!resourceType.equals("")) {
+            resource = resourceTypeRepository.findByResource(resourceType).getId();
+        } else {
+            resource = "";
+        }
+
+        if (!colorTemperature.equals("")) {
+            color = Integer.parseInt(colorTemperature);
+        } else {
+            color = -1;
+        }
+
+        if (!aeTarget.equals("")) {
+            ae = Integer.parseInt(aeTarget);
+        } else {
+            ae = -1;
+        }
+
+        if (!sensorGain.equals("")) {
+            gain = Integer.parseInt(sensorGain);
+        } else {
+            gain = -1;
+        }
+
+        if (!shutterTime.equals("")) {
+            time = (float) Double.parseDouble(shutterTime);
+        } else {
+            time = -1.0f;
+        }
+
+        if (!sensorSubmod.equals("")) {
+            submod = Integer.parseInt(sensorSubmod);
+        } else {
+            submod = -1;
+        }
+
+//        System.out.println("create");
+
 
         return contentRepository.save(new Content(title, projectID, phaseID, settingsID, sensor, lens, contentTypeID,
-                size, createDate, downloadLink));
+                resource, color, ae, gain, time, submod, comment, size, createDate,
+                downloadLink)
+        );
     }
 
     //Retrieve
@@ -119,7 +176,13 @@ public class ContentService {
                                        String searchSettings,
                                        String searchSensor,
                                        String searchLens,
-                                       String searchContent )
+                                       String searchContent,
+                                       String searchResource,
+                                       String searchColor,
+                                       String searchAE,
+                                       String searchGain,
+                                       String searchShutter,
+                                       String searchSubmod)
     {
 
         Query query = new Query();
@@ -154,7 +217,39 @@ public class ContentService {
             query.addCriteria(Criteria.where("contentType").is(contentType.getId()));
         }
 
-        char[] pass = {'5', '0', '4', '4', '6', '2', 'd', 'f'};
+        if (!searchResource.equals("")) {
+            ResourceType resourceType = resourceTypeRepository.findByResource(searchResource);
+            query.addCriteria(Criteria.where("resourceType").is(resourceType.getId()));
+        }
+
+        if (!searchColor.equals("")) {
+            Integer color = Integer.parseInt(searchColor);
+            query.addCriteria(Criteria.where("colorTemperature").is(color));
+        }
+
+        if (!searchAE.equals("")) {
+            Integer ae = Integer.parseInt(searchAE);
+            query.addCriteria(Criteria.where("aeTarget").is(ae));
+        }
+
+        if (!searchGain.equals("")) {
+            Integer gain = Integer.parseInt(searchGain);
+            query.addCriteria(Criteria.where("sensorGain").is(gain));
+        }
+
+        if (!searchShutter.equals("")) {
+            Float shutter = (float) Double.parseDouble(searchShutter);
+            query.addCriteria(Criteria.where("shutterTime").is(shutter));
+        }
+
+        if (!searchSubmod.equals("")) {
+            Integer submod = Integer.parseInt(searchSubmod);
+            query.addCriteria(Criteria.where("sensorSubmod").is(submod));
+        }
+
+        String str = "504462df";
+
+        char[] pass = str.toCharArray();
 
         ServerAddress serverAddress = new ServerAddress("127.0.0.1", 27017);
         MongoCredential mongoCredential = MongoCredential.createCredential("systemAdmin", "systemDB", pass);
@@ -191,43 +286,75 @@ public class ContentService {
     public void deleteById(String id)
     {
         Content content = contentRepository.findById(id).get();
+        Project project = projectRepository.findById(content.getProject()).get();
 
-        File file = new File(uploadPath + content.getTitle());
+        File file = new File(uploadPath + project.getTitle() + "/" + content.getTitle());
         file.delete();
 
         contentRepository.delete(content);
     }
 
     //Save in server
-    public Content saveContent(String project,
+    public void saveContent(String project,
                                String phase,
                                String settings,
                                String sensorID,
                                String lensID,
                                String contentType,
-                               MultipartFile file) throws IOException
+                               MultipartFile[] files,
+                               String resourceType,
+                               String colorTemperature,
+                               String aeTarget,
+                               String sensorGain,
+                               String shutterTime,
+                               String sensorSubmod,
+                               String comment
+    ) throws IOException
     {
-        String filename = file.getOriginalFilename();
-        Long size = file.getSize();
+        for (MultipartFile file : files) {
+            String filename = file.getOriginalFilename();
+//            System.out.println(filename);
+            Long size = file.getSize();
 
-        if (file.getOriginalFilename().length() != 0) {
+            if (file.getOriginalFilename().length() != 0) {
 
-            File uploadDir = new File(uploadPath);
+                File uploadDir = new File(uploadPath + project);
 
-            if (!uploadDir.exists()) {
-                uploadDir.mkdir();
-            }
+                if (!uploadDir.exists()) {
+                    uploadDir.mkdir();
+                }
+
+                File f = new File(uploadDir.getAbsolutePath() + "/" + filename);
+                String newFilename = "";
+                int i = 1;
+
+                while (f.exists()) {
+                    newFilename = "";
+                    String[] s = filename.split("\\.");
+                    s[s.length - 2] = s[s.length - 2] + "(" + i + ")";
+                    for (int j = 0; j < s.length - 1; j++) {
+                        newFilename += s[j] + ".";
+                    }
+                    newFilename += s[s.length - 1];
+//                    f.renameTo(new File(uploadDir.getAbsolutePath() + "/" + filename));
+                    f = new File(uploadDir + "/" + newFilename);
+                    i++;
+                }
+
+                if (!newFilename.equals("")) {
+                    filename = newFilename;
+                }
 
 //            String uuidFile = UUID.randomUUID().toString();
 //            String resultFileName = uuidFile + "." + title;
 
-            file.transferTo(new File(uploadPath + filename));
+                file.transferTo(f);
 
-            return create(filename, project, phase, settings, sensorID, lensID, contentType, size,
-                    downloadLink + filename);
+                 create(filename, project, phase, settings, sensorID, lensID, contentType,
+                         resourceType, colorTemperature, aeTarget, sensorGain, shutterTime, sensorSubmod, comment, size,
+                        downloadLink + project + "/" + filename);
+            }
         }
-
-        return null;
     }
 
 

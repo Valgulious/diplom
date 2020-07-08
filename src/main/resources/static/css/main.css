@@ -1,0 +1,16 @@
+p {
+    margin: 0 0 0 0;
+    background-color: rgba(0,0,0,0);
+}
+
+.in-folder {
+    padding: 10px;
+}
+
+.folder {
+    margin: 10px;
+}
+
+.folder :hover {
+    background-color: rgba(0,0,0,.06);
+}

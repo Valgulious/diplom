@@ -15,6 +15,10 @@ public class ResourceType {
         this.resource = resource;
     }
 
+    public String getId() {
+        return id;
+    }
+
     public String getResource() {
         return resource;
     }

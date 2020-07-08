@@ -59,7 +59,7 @@ const Project = () => {
 
     let projectReload = () => {
         setVisible(false);
-        fetch('http://localhost:8080/api/projects/' + id)
+        fetch('http://localhost:8080/api/content/project/' + id)
             .then(res => res.json())
             .then(res => {
                 setContent(res);
@@ -88,7 +88,7 @@ const Project = () => {
                     <div uk-dropdown="mode: click">
                         <ul className='uk-nav uk-dropdown-nav'>
                             <li>
-                                <a className='uk-link-text' href={'http://localhost:8080/api/projects/download/' + id}>
+                                <a className='uk-link-text' href={'/api/projects/download/' + id}>
                                     <span uk-icon="download"></span> Download project
                                 </a>
                             </li>

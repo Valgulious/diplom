@@ -24,17 +24,37 @@ public class ContentController {
     private String uploadPath;
 
     @RequestMapping(method = RequestMethod.POST)
-    public String create(@RequestParam String project,
+    public void create(@RequestParam String project,
                          @RequestParam String phase,
                          @RequestParam String settings,
                          @RequestParam String sensorID,
                          @RequestParam String lensID,
                          @RequestParam String contentType,
-                         @RequestParam("file") MultipartFile file)
+                         @RequestParam("files[]") MultipartFile[] files,
+                         @RequestParam String resourceType,
+                         @RequestParam String colorTemperature,
+                         @RequestParam String aeTarget,
+                         @RequestParam String sensorGain,
+                         @RequestParam String shutterTime,
+                         @RequestParam String sensorSubmod,
+                         @RequestParam String comment)
             throws IOException
     {
-        Content content = contentService.saveContent(project, phase, settings, sensorID, lensID, contentType, file);
-        return content.toString();
+        contentService.saveContent(project,
+                phase,
+                settings,
+                sensorID,
+                lensID,
+                contentType,
+                files,
+                resourceType,
+                colorTemperature,
+                aeTarget,
+                sensorGain,
+                shutterTime,
+                sensorSubmod,
+                comment
+        );
     }
 
     @RequestMapping(value = "/getAll", method = RequestMethod.GET)

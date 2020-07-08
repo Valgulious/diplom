@@ -12,25 +12,28 @@ const SearchComponent = () => {
     useEffect(() => {
 
         let search = {
-            searchProject: localStorage.getItem('searchProject'),
-            searchPhase: localStorage.getItem('searchPhase'),
-            searchSettings: localStorage.getItem('searchSettings'),
-            searchSensor: localStorage.getItem('searchSensor'),
-            searchLens: localStorage.getItem('searchLens'),
-            searchContent: localStorage.getItem('searchContent')
+            searchProject: sessionStorage.getItem('searchProject'),
+            searchPhase: sessionStorage.getItem('searchPhase'),
+            searchSettings: sessionStorage.getItem('searchSettings'),
+            searchSensor: sessionStorage.getItem('searchSensor'),
+            searchLens: sessionStorage.getItem('searchLens'),
+            searchContent: sessionStorage.getItem('searchContent'),
+            searchResource: sessionStorage.getItem('searchResource'),
+            searchColor: sessionStorage.getItem('searchColor'),
+            searchAE: sessionStorage.getItem('searchAE'),
+            searchGain: sessionStorage.getItem('searchGain'),
+            searchShutter: sessionStorage.getItem('searchShutter'),
+            searchSubmod: sessionStorage.getItem('searchSubmod'),
         }
 
         let url = 'http://localhost:8080/api/search?searchProject=' + search.searchProject +
             '&searchPhase=' + search.searchPhase + '&searchSettings=' + search.searchSettings +
             '&searchSensor=' + search.searchSensor + '&searchLens=' + search.searchLens +
-            '&searchContent=' + search.searchContent;
+            '&searchContent=' + search.searchContent + '&searchResource=' + search.searchResource +
+            '&searchColor=' + search.searchColor + '&searchAE=' + search.searchAE + '&searchGain=' + search.searchGain +
+            '&searchShutter=' + search.searchShutter + '&searchSubmod=' + search.searchSubmod;
 
-        console.log('searchProject = ' + localStorage.getItem('searchProject'));
-        console.log('searchPhase = ' + localStorage.getItem('searchPhase'));
-        console.log('searchSettings = ' + localStorage.getItem('searchSettings'));
-        console.log('searchSensor = ' + localStorage.getItem('searchSensor'));
-        console.log('searchLens = ' + localStorage.getItem('searchLens'));
-        console.log('searchContent = ' + localStorage.getItem('searchContent'));
+        sessionStorage.setItem('url', url);
 
         fetch(url)
             .then(res => res.json())
@@ -45,6 +48,10 @@ const SearchComponent = () => {
         setContentId(e.target.id);
         console.log('click');
     }
+
+    // let handleOnClickDownload = () => {
+    //
+    // }
 
     let handleOnClickDiv = () => {
         if (flag) {
@@ -67,7 +74,7 @@ const SearchComponent = () => {
 
     let searchReload = () => {
         setVisible(false);
-        fetch('http://localhost:8080/api/projects/' + id)
+        fetch(sessionStorage.getItem('url'))
             .then(res => res.json())
             .then(res => {
                 setContent(res);
@@ -87,7 +94,7 @@ const SearchComponent = () => {
                     <h3>
                         <a href='/' uk-icon="icon: arrow-left; ratio: 1.5"></a>
                         Searching results
-                        <a className='uk-link-text' uk-icon="download"></a>
+                        <a className='uk-link-text' uk-icon="download" href={'/api/search/download?contents[]=' + content}></a>
                     </h3>
                     <div id='projects' className='uk-grid-column-small uk-grid-row-small uk-text-center' uk-grid=''>
                         {
