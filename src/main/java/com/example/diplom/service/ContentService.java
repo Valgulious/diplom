@@ -149,11 +149,17 @@ public class ContentService {
         String phase = phaseRepository.findById(content.getPhase()).get().getTitle();
         String settings = settingsRepository.findById(content.getSettings()).get().getTitle();
         String contentType = contentTypeRepository.findById(content.getContentType()).get().getType();
+        String resourceType = "";
+
+        if (!content.getResourceType().equals("")) {
+            resourceType = resourceTypeRepository.findById(content.getResourceType()).get().getResource();
+        }
 
         content.setProject(project);
         content.setPhase(phase);
         content.setSettings(settings);
         content.setContentType(contentType);
+        content.setResourceType(resourceType);
 
         return content;
     }

@@ -40,7 +40,7 @@ const Main = () => {
     return(
         <div>
             <div uk-grid=''>
-                <div className='uk-width-1-6 uk-text-center uk-margin-left uk-margin-right'>
+                <div className='uk-width-1-5 uk-text-center uk-margin-left uk-margin-right'>
                     <div className='uk-margin-bottom'>
                         <button className="uk-button uk-button-primary" uk-toggle="target: #uploadForm">
                             <span uk-icon='icon: upload'></span> Upload
@@ -55,14 +55,14 @@ const Main = () => {
                         visible ? <ProjectInfo id={projectId} mainReload={mainReload}/> : ''
                     }
                 </div>
-                <div className='uk-width-expand uk-card uk-card-default uk-card-body uk-margin-right'>
+                <div className='uk-width-expand uk-card uk-card-default uk-card-body uk-margin-right main'>
                     <h3>Projects</h3>
                     <div id='projects' className='uk-grid-column-small uk-grid-row-small uk-text-center' uk-grid=''>
                         {
                             projects.map((project) => (
                                 <div className='folder' id={project.id} onClick={handleOnClick} onDoubleClick={handleOnDoubleClick}>
                                     <div id={project.id} className='in-folder'>
-                                        <img id={project.id} src="https://img.icons8.com/ios/50/000000/folder-invoices--v1.png"/>
+                                        <img id={project.id} src="https://img.icons8.com/ios/100/000000/folder-invoices--v1.png"/>
                                         <p id={project.id}>{project.title}</p>
                                     </div>
                                 </div>

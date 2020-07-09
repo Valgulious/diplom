@@ -39,10 +39,10 @@ const ProjectInfo = ({ id, mainReload }) => {
             </div>
             <div className='uk-card-body'>
                 <div uk-grid=''>
-                    <div className='uk-width-1-2 uk-text-left'>
+                    <div className='uk-width-1-2 uk-text-left info'>
                         <p>Create date:</p>
                     </div>
-                    <div className='uk-width-1-2 uk-text-left'>
+                    <div className='uk-width-1-2 uk-text-left info'>
                         <p>{project.createDate}</p>
                     </div>
                 </div>

@@ -70,7 +70,7 @@ const Project = () => {
     return(
         <div>
             <div uk-grid=''>
-                <div className='uk-width-1-6 uk-text-center uk-margin-left uk-margin-right'>
+                <div className='uk-width-1-5 uk-text-center uk-margin-left uk-margin-right'>
                     <div className='uk-margin-bottom'>
                         <button className="uk-button uk-button-primary" uk-toggle="target: #uploadForm">Upload</button>
                     </div>
@@ -78,10 +78,10 @@ const Project = () => {
                         visible ? <ContentInfo id={contentId} projectReload={projectReload}/> : ''
                     }
                 </div>
-                <div className='uk-width-expand uk-card uk-card-default uk-card-body uk-margin-right'>
+                <div className='uk-width-expand uk-card uk-card-default uk-card-body uk-margin-right main'>
                     <h3>
-                        <a href='/' uk-icon="icon: arrow-left; ratio: 1.5"></a>
-                        {project.title}
+                        <a  href='/' uk-icon="icon: arrow-left; ratio: 1.5"></a>
+                        <span className='uk-margin-small-left uk-margin-small-right'>{project.title}</span>
                         <span className='uk-link' uk-icon="more-vertical"></span>
 
                     </h3>
@@ -102,15 +102,17 @@ const Project = () => {
                     <div id='projects' className='uk-grid-column-small uk-grid-row-small uk-text-center' uk-grid=''>
                         {
                             content.map((cont) => (
-                                <div onClick={handleOnClick}>
-                                    <span uk-icon='icon: file; ratio: 3'></span>
-                                    <p id={cont.id}>
-                                        {
-                                            cont.title.length > 22 ?
-                                                cont.title.substr(0,22) + '...' :
-                                                cont.title
-                                        }
-                                    </p>
+                                <div className='folder' >
+                                    <div id={cont.id} className='in-folder' onClick={handleOnClick}>
+                                        <img id={cont.id} src="https://img.icons8.com/ios/100/000000/file.png"/>
+                                        <p id={cont.id}>
+                                            {
+                                                cont.title.length > 10 ?
+                                                    cont.title.substr(0,10) + '...' :
+                                                    cont.title
+                                            }
+                                        </p>
+                                    </div>
                                 </div>
                             ))
                         }

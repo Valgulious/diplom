@@ -36,12 +36,16 @@ const Search = () => {
                         onChange={handleOnChange}
                     />
                     {
-                        visible ? <div className='uk-card uk-card-default uk-card-body uk-width-1-3
-                                    uk-position-absolute uk-position-z-index'>
+                        visible ? <div className='uk-card uk-card-default uk-card-body
+                                    uk-position-absolute uk-position-z-index search-results'>
                             {
                                 projects.map((project) => (
-                                    <div>
-                                        <span uk-icon='icon: folder'></span> {project.title}
+                                    <div className='uk-width-expand uk-flex search-margin folder'>
+                                        <a className='uk-link-text uk-width-expand' href={"/" + project.id}>
+                                            <div className='uk-width-expand search-margin in-folder'>
+                                                <img src="https://img.icons8.com/ios/30/000000/folder-invoices--v2.png"/> {project.title}
+                                            </div>
+                                        </a>
                                     </div>
                                 ))
                             }

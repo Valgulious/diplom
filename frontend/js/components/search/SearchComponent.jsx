@@ -85,7 +85,7 @@ const SearchComponent = () => {
     return(
         <div>
             <div uk-grid=''>
-                <div className='uk-width-1-6 uk-text-center uk-margin-left uk-margin-right'>
+                <div className='uk-width-1-5 uk-text-center uk-margin-left uk-margin-right'>
                     {
                         visible ? <ContentInfo id={contentId} projectReload={searchReload}/> : ''
                     }
@@ -93,21 +93,23 @@ const SearchComponent = () => {
                 <div className='uk-width-expand uk-card uk-card-default uk-card-body uk-margin-right'>
                     <h3>
                         <a href='/' uk-icon="icon: arrow-left; ratio: 1.5"></a>
-                        Searching results
+                        <span className='uk-margin-small-left uk-margin-small-right'>Searching results</span>
                         <a className='uk-link-text' uk-icon="download" href={'/api/search/download?contents[]=' + content}></a>
                     </h3>
-                    <div id='projects' className='uk-grid-column-small uk-grid-row-small uk-text-center' uk-grid=''>
+                    <div id='projects' className='uk-grid-column-small uk-grid-row-small uk-text-center main' uk-grid=''>
                         {
                             content.map((cont) => (
-                                <div onClick={handleOnClick}>
-                                    <span uk-icon='icon: file; ratio: 3'></span>
-                                    <p id={cont.id}>
-                                        {
-                                            cont.title.length > 22 ?
-                                                cont.title.substr(0,22) + '...' :
-                                                cont.title
-                                        }
-                                    </p>
+                                <div className='folder' >
+                                    <div id={cont.id} className='in-folder' onClick={handleOnClick}>
+                                        <img id={cont.id} src="https://img.icons8.com/ios/100/000000/file.png"/>
+                                        <p id={cont.id}>
+                                            {
+                                                cont.title.length > 10 ?
+                                                    cont.title.substr(0,10) + '...' :
+                                                    cont.title
+                                            }
+                                        </p>
+                                    </div>
                                 </div>
                             ))
                         }
