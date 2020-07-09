@@ -35,9 +35,12 @@ public class ProjectController {
     public List<Project> getAll() { return projectService.getAll(); }
 
     @RequestMapping(value = "/byTitle", method = RequestMethod.GET)
-    public boolean getByTitle(@RequestParam String title) {
+    public boolean byTitle(@RequestParam String title) {
         return projectService.findByTitle(title) != null;
     }
+
+    @RequestMapping(value = "/getByTitle", method = RequestMethod.GET)
+    public Project getByTitle(@RequestParam String title) { return projectService.findByTitle(title); }
 
 
     @RequestMapping(method = RequestMethod.POST)

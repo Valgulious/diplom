@@ -6,7 +6,7 @@ import ProjectInfo from "../info/ProjectInfo.jsx";
 const Main = () => {
 
     const [visible, setVisible] = useState(false);
-    const [projectId, setProjectId] = useState('');
+    const [projectTitle, setProjectTitle] = useState('');
 
     const [projects, setProjects] = useState([]);
     useEffect(() => {
@@ -19,8 +19,8 @@ const Main = () => {
 
     let handleOnClick = (e) => {
         setVisible(true);
-        setProjectId(e.target.id);
-        console.log(projectId);
+        setProjectTitle(e.target.id);
+        console.log(projectTitle);
         console.log(visible);
     }
 
@@ -52,7 +52,7 @@ const Main = () => {
                         </button>
                     </div>
                     {
-                        visible ? <ProjectInfo id={projectId} mainReload={mainReload}/> : ''
+                        visible ? <ProjectInfo title={projectTitle} mainReload={mainReload}/> : ''
                     }
                 </div>
                 <div className='uk-width-expand uk-card uk-card-default uk-card-body uk-margin-right main'>
@@ -60,10 +60,10 @@ const Main = () => {
                     <div id='projects' className='uk-grid-column-small uk-grid-row-small uk-text-center' uk-grid=''>
                         {
                             projects.map((project) => (
-                                <div className='folder' id={project.id} onClick={handleOnClick} onDoubleClick={handleOnDoubleClick}>
-                                    <div id={project.id} className='in-folder'>
-                                        <img id={project.id} src="https://img.icons8.com/ios/100/000000/folder-invoices--v1.png"/>
-                                        <p id={project.id}>{project.title}</p>
+                                <div className='folder' id={project.title} onClick={handleOnClick} onDoubleClick={handleOnDoubleClick}>
+                                    <div id={project.title} className='in-folder'>
+                                        <img id={project.title} src="https://img.icons8.com/ios/100/000000/folder-invoices--v1.png"/>
+                                        <p id={project.title}>{project.title}</p>
                                     </div>
                                 </div>
                             ))
@@ -73,8 +73,8 @@ const Main = () => {
             </div>
 
 
-            <UploadForm/>
-            <CreateProject/>
+            <UploadForm rojects={projects}/>
+            <CreateProject reload={mainReload}/>
         </div>
     );
 }

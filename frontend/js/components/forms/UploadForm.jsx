@@ -25,7 +25,7 @@ const defaultForm = {
     ]
 }
 
-const UploadForm = () => {
+const UploadForm = ({ projects }) => {
 
     const [hidden, setHidden] = useState(true);
 
@@ -37,7 +37,7 @@ const UploadForm = () => {
                 setForm(res)
             })
 
-    }, []);
+    }, [projects]);
 
     let handleSubmit = (e) => {
         e.preventDefault();
@@ -121,9 +121,30 @@ const UploadForm = () => {
         fetch('http://localhost:8080/api/content', {
             method: 'post',
             body: formData
-        });
+        })
+            .then(res => {
+                if (res.status === 200) {
+                    let form = document.getElementById('uploadForm');
+                    form.style.display = 'none';
+                    UIkit.notification({
+                        message: 'Content uploaded successfully!',
+                        status: 'success',
+                        pos: 'top-right',
+                    });
+                } else {
+                    UIkit.notification({
+                        message: 'Content not uploaded.',
+                        status: 'danger',
+                        pos: 'top-right',
+                    });
+                }
+            });
 
         sessionStorage.clear();
+    }
+
+    let handleOnInvalid = (e) => {
+        e.target.setCustomValidity("Enter Sensor ID");
     }
 
     return (
@@ -198,6 +219,7 @@ const UploadForm = () => {
                                            min="0"
                                            max="999999"
                                            required
+                                           onInvalid={handleOnInvalid}
                                     />
                                 </div>
                             </div>

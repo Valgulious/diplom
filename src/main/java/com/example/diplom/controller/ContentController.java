@@ -73,9 +73,9 @@ public class ContentController {
         return contentService.getById(id);
     }
 
-    @RequestMapping(value = "/project/{id}", method = RequestMethod.GET)
-    public List<Content> getContentByProjectId(@PathVariable String id) {
-        return contentService.getByProject(id);
+    @RequestMapping(value = "/project/{title}", method = RequestMethod.GET)
+    public List<Content> getContentByProjectId(@PathVariable String title) {
+        return contentService.getByProjectTitle(title);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)

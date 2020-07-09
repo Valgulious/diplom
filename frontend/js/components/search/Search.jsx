@@ -41,7 +41,7 @@ const Search = () => {
                             {
                                 projects.map((project) => (
                                     <div className='uk-width-expand uk-flex search-margin folder'>
-                                        <a className='uk-link-text uk-width-expand' href={"/" + project.id}>
+                                        <a className='uk-link-text uk-width-expand' href={"/" + project.title}>
                                             <div className='uk-width-expand search-margin in-folder'>
                                                 <img src="https://img.icons8.com/ios/30/000000/folder-invoices--v2.png"/> {project.title}
                                             </div>

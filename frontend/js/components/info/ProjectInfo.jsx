@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react'
 
-const ProjectInfo = ({ id, mainReload }) => {
+const ProjectInfo = ({ title, mainReload }) => {
 
     const [project, setProject] = useState({});
     useEffect(() => {
-        fetch('http://localhost:8080/api/projects/' + id)
+        fetch('http://localhost:8080/api/projects/getByTitle?title=' + title)
             .then(res => res.json())
             .then(res => {
                 setProject(res);
                 console.log(res);
             })
-    }, [id])
+    }, [title])
 
     let handleClickDelete = () => {
-        fetch('http://localhost:8080/api/projects/' + id, {method: 'delete'})
+        fetch('http://localhost:8080/api/projects/' + project.id, {method: 'delete'})
             .then(res => {
                 if (res.status === 200) {
                     mainReload()
@@ -29,7 +29,7 @@ const ProjectInfo = ({ id, mainReload }) => {
                         <a
                             className='uk-link-text'
                             uk-icon="download"
-                            href={'http://localhost:8080/api/projects/download/' + id}
+                            href={'http://localhost:8080/api/projects/download/' + project.id}
                         ></a>
                     </div>
                     <div>

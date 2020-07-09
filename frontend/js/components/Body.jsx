@@ -19,7 +19,7 @@ const Body = () => {
             <Switch>
                 <Route exact path='/' component={Main}/>
                 <Route exact path='/search' component={SearchComponent}/>
-                <Route exact path='/:id' component={Project}/>
+                <Route exact path='/:title' component={Project}/>
                 <Route exact path='/edit/edit' component={Edit}/>
                 {/*<Route exact path='/catalog' component={FullCatalog}/>*/}
                 {/*<Route exact path='/catalog/bytag/:id' component={FullCatalog}/>*/}

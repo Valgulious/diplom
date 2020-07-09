@@ -176,6 +176,10 @@ public class ContentService {
         return contentRepository.findByTitle(title);
     }
     public List<Content> getByProject(String id) { return contentRepository.findByProject(id); }
+    public List<Content> getByProjectTitle(String title) {
+        Project project = projectRepository.findByTitle(title);
+        return contentRepository.findByProject(project.getId());
+    }
 
     public List<Content> getByCriteria(String searchProject,
                                        String searchPhase,

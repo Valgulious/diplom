@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 
-const CreateProject = () => {
+const CreateProject = ({ reload }) => {
 
     const [visible, setVisible] = useState(false);
+    const [text, setText] = useState('');
 
     let handleSubmit = (e) => {
         e.preventDefault();
@@ -13,7 +14,27 @@ const CreateProject = () => {
 
         fetch('http://localhost:8080/api/projects?title=' + project_name.value, {
             method: 'post'
-        });
+        })
+            .then(res => {
+                if (res.status === 200) {
+                    project_name.value = '';
+                    project_name.classList.remove('uk-form-success');
+                    UIkit.notification({
+                        message: 'Project successfully created!',
+                        status: 'success',
+                        pos: 'top-right',
+                    });
+                    reload();
+                    let form = document.getElementById('createProject');
+                    form.style.display = 'none';
+                } else {
+                    UIkit.notification({
+                        message: 'Project not created.',
+                        status: 'danger',
+                        pos: 'top-right',
+                    });
+                }
+            });
     }
 
     let handleOnChange = (e) => {
@@ -21,20 +42,31 @@ const CreateProject = () => {
         let input = document.getElementById('project_name');
         let button = document.getElementById('create_button');
 
-        fetch('http://localhost:8080/api/projects/byTitle?title=' + e.target.value)
-            .then(res => res.json())
-            .then(res => {
-                setVisible(res);
-                if (res) {
-                    button.disabled = true;
-                    input.classList.add('uk-form-danger');
-                    input.classList.remove('uk-form-success')
-                } else {
-                    button.disabled = false;
-                    input.classList.add('uk-form-success');
-                    input.classList.remove('uk-form-danger');
-                }
-            })
+        if (e.target.value.length < 3 || e.target.value.length > 20) {
+            setText('Project title must be between 3 and 20 characters long.');
+            setVisible(true);
+            button.disabled = true;
+            input.classList.add('uk-form-danger');
+            input.classList.remove('uk-form-success');
+        } else {
+            fetch('http://localhost:8080/api/projects/byTitle?title=' + e.target.value)
+                .then(res => res.json())
+                .then(res => {
+                    setVisible(res);
+                    if (res) {
+                        button.disabled = true;
+                        input.classList.add('uk-form-danger');
+                        input.classList.remove('uk-form-success');
+                        setText('A project with the same title already exists.');
+                    } else {
+                        button.disabled = false;
+                        input.classList.add('uk-form-success');
+                        input.classList.remove('uk-form-danger');
+                    }
+                })
+        }
+
+
     }
 
     return(
@@ -56,7 +88,7 @@ const CreateProject = () => {
                             />
                             {
                                 visible ?
-                                    <span className='uk-text-danger'>A project with the same title already exists.
+                                    <span className='uk-text-danger'> {text}
                                     </span> : ''
                             }
                         </div>

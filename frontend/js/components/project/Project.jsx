@@ -6,11 +6,11 @@ import CreateProject from "../forms/CreateProject.jsx";
 
 const Project = () => {
 
-    const { id } = useParams();
+    const { title } = useParams();
 
     const [project, setProject] = useState({});
     useEffect(() => {
-        fetch('http://localhost:8080/api/projects/' + id)
+        fetch('http://localhost:8080/api/projects/getByTitle?title=' + title)
             .then(res => res.json())
             .then(res => {
                 setProject(res);
@@ -24,7 +24,7 @@ const Project = () => {
 
     const [content, setContent] = useState([]);
     useEffect(() => {
-        fetch('http://localhost:8080/api/content/project/' + id)
+        fetch('http://localhost:8080/api/content/project/' + title)
             .then(res => res.json())
             .then(res => {
                 setContent(res);
@@ -54,12 +54,12 @@ const Project = () => {
     }
 
     let handleClickDeleteProject = () => {
-        fetch('http://localhost:8080/api/projects/' + id, {method: 'delete'})
+        fetch('http://localhost:8080/api/projects/' + project.id, {method: 'delete'})
     }
 
     let projectReload = () => {
         setVisible(false);
-        fetch('http://localhost:8080/api/content/project/' + id)
+        fetch('http://localhost:8080/api/content/project/' + title)
             .then(res => res.json())
             .then(res => {
                 setContent(res);
@@ -81,14 +81,14 @@ const Project = () => {
                 <div className='uk-width-expand uk-card uk-card-default uk-card-body uk-margin-right main'>
                     <h3>
                         <a  href='/' uk-icon="icon: arrow-left; ratio: 1.5"></a>
-                        <span className='uk-margin-small-left uk-margin-small-right'>{project.title}</span>
+                        <span className='uk-margin-small-left uk-margin-small-right'>{title}</span>
                         <span className='uk-link' uk-icon="more-vertical"></span>
 
                     </h3>
                     <div uk-dropdown="mode: click">
                         <ul className='uk-nav uk-dropdown-nav'>
                             <li>
-                                <a className='uk-link-text' href={'/api/projects/download/' + id}>
+                                <a className='uk-link-text' href={'/api/projects/download/' + project.id}>
                                     <span uk-icon="download"></span> Download project
                                 </a>
                             </li>
