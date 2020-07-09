@@ -26,7 +26,7 @@ const SearchComponent = () => {
             searchSubmod: sessionStorage.getItem('searchSubmod'),
         }
 
-        let url = 'http://localhost:8080/api/search?searchProject=' + search.searchProject +
+        let url = '?searchProject=' + search.searchProject +
             '&searchPhase=' + search.searchPhase + '&searchSettings=' + search.searchSettings +
             '&searchSensor=' + search.searchSensor + '&searchLens=' + search.searchLens +
             '&searchContent=' + search.searchContent + '&searchResource=' + search.searchResource +
@@ -35,7 +35,7 @@ const SearchComponent = () => {
 
         sessionStorage.setItem('url', url);
 
-        fetch(url)
+        fetch('http://localhost:8080/api/search' + url)
             .then(res => res.json())
             .then(res => {
                 setContent(res);
@@ -49,9 +49,12 @@ const SearchComponent = () => {
         console.log('click');
     }
 
-    // let handleOnClickDownload = () => {
-    //
-    // }
+    let handleOnClickDownload = () => {
+
+        const url = sessionStorage.getItem('url');
+
+        fetch('/api/search/download' + url);
+    }
 
     let handleOnClickDiv = () => {
         if (flag) {
@@ -90,13 +93,13 @@ const SearchComponent = () => {
                         visible ? <ContentInfo id={contentId} projectReload={searchReload}/> : ''
                     }
                 </div>
-                <div className='uk-width-expand uk-card uk-card-default uk-card-body uk-margin-right'>
+                <div className='uk-width-expand uk-card uk-card-default uk-card-body uk-margin-right main'>
                     <h3>
                         <a href='/' uk-icon="icon: arrow-left; ratio: 1.5"></a>
                         <span className='uk-margin-small-left uk-margin-small-right'>Searching results</span>
-                        <a className='uk-link-text' uk-icon="download" href={'/api/search/download?contents[]=' + content}></a>
+                        <a className='uk-link-text' uk-icon="download" href={'/api/search/download' + sessionStorage.getItem('url')}></a>
                     </h3>
-                    <div id='projects' className='uk-grid-column-small uk-grid-row-small uk-text-center main' uk-grid=''>
+                    <div id='projects' className='uk-grid-column-small uk-grid-row-small uk-text-center' uk-grid=''>
                         {
                             content.map((cont) => (
                                 <div className='folder' >

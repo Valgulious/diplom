@@ -129,7 +129,7 @@ const UploadForm = () => {
     return (
             <div id="uploadForm" uk-modal="">
                 <div className="uk-modal-dialog uk-modal-body">
-                    <form id="upload" onSubmit={handleSubmit}>
+                    <form id="upload" className='uk-form-horizontal' onSubmit={handleSubmit}>
 
                         <fieldset className='uk-fieldset'>
 
@@ -137,14 +137,16 @@ const UploadForm = () => {
 
                             <div className="uk-margin">
                                 <label className="uk-form-label" htmlFor="form-stacked-text">Project</label>
-                                <select id='project' name="project" className="uk-select" required>
-                                    <option value="">Not chosen</option>
-                                    {
-                                        form.projects.map((project) => (
-                                            <option value={project.title}>{project.title}</option>
-                                        ))
-                                    }
-                                </select>
+                                <div className='uk-form-controls'>
+                                    <select id='project' name="project" className="uk-select uk-form-small uk-form-width-medium" required>
+                                        <option value="">Not chosen</option>
+                                        {
+                                            form.projects.map((project) => (
+                                                <option value={project.title}>{project.title}</option>
+                                            ))
+                                        }
+                                    </select>
+                                </div>
                             </div>
 
                             <div className="uk-margin">
@@ -187,40 +189,46 @@ const UploadForm = () => {
 
                             <div className="uk-margin">
                                 <label className="uk-form-label" htmlFor="form-stacked-text">Sensor ID</label>
-                                <input id="sensor"
-                                       className="uk-input"
-                                       name="sensorID"
-                                       type="number"
-                                       placeholder="Sensor ID"
-                                       min="0"
-                                       max="999999"
-                                       required
-                                />
+                                <div className='uk-form-controls'>
+                                    <input id="sensor"
+                                           className="uk-input uk-form-small uk-form-width-medium"
+                                           name="sensorID"
+                                           type="number"
+                                           placeholder="Sensor ID"
+                                           min="0"
+                                           max="999999"
+                                           required
+                                    />
+                                </div>
                             </div>
 
                             <div className="uk-margin">
                                 <label className="uk-form-label" htmlFor="form-stacked-text">Lens ID</label>
-                                <input id="lens"
-                                       className="uk-input"
-                                       name="lensID"
-                                       type="number"
-                                       placeholder="Lens ID"
-                                       min="0"
-                                       max="999999"
-                                       required
-                                />
+                                <div className='uk-form-controls'>
+                                    <input id="lens"
+                                           className="uk-input uk-form-small uk-form-width-medium"
+                                           name="lensID"
+                                           type="number"
+                                           placeholder="Lens ID"
+                                           min="0"
+                                           max="999999"
+                                           required
+                                    />
+                                </div>
                             </div>
 
                             <div className="uk-margin">
                                 <label className="uk-form-label" htmlFor="form-stacked-text">Content type</label>
-                                <select id="content" className="uk-select" name="contentType" required>
-                                    <option value="">Not chosen</option>
-                                    {
-                                        form.contentTypes.map((type) => (
-                                            <option value={type.type}>{type.type}</option>
-                                        ))
-                                    }
-                                </select>
+                                <div className='uk-form-controls'>
+                                    <select id="content" className="uk-select uk-form-small uk-form-width-medium" name="contentType" required>
+                                        <option value="">Not chosen</option>
+                                        {
+                                            form.contentTypes.map((type) => (
+                                                <option value={type.type}>{type.type}</option>
+                                            ))
+                                        }
+                                    </select>
+                                </div>
                             </div>
 
                             <div className="uk-margin">
@@ -233,6 +241,7 @@ const UploadForm = () => {
                                 hidden ? '' :
                                     <Hidden
                                         resourceTypes = {form.resourceTypes}
+                                        comment = {true}
                                     />
                             }
 

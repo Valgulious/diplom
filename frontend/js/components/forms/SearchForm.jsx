@@ -90,7 +90,7 @@ const SearchForm = () => {
     return (
         <div id="searchForm" uk-modal="">
             <div className="uk-modal-dialog uk-modal-body">
-                <form id="search" onSubmit={handleSubmit}>
+                <form id="search" className='uk-form-horizontal' onSubmit={handleSubmit}>
 
                     <fieldset className='uk-fieldset'>
 
@@ -98,14 +98,16 @@ const SearchForm = () => {
 
                         <div className="uk-margin">
                             <label className="uk-form-label" htmlFor="form-stacked-text">Project</label>
-                            <select id='searchProject' name="searchProject" className="uk-select">
-                                <option value="">Not chosen</option>
-                                {
-                                    form.projects.map((project) => (
-                                        <option value={project.title}>{project.title}</option>
-                                    ))
-                                }
-                            </select>
+                            <div className='uk-form-controls'>
+                                <select id='searchProject' name="searchProject" className="uk-select uk-form-small uk-form-width-medium">
+                                    <option value="">Not chosen</option>
+                                    {
+                                        form.projects.map((project) => (
+                                            <option value={project.title}>{project.title}</option>
+                                        ))
+                                    }
+                                </select>
+                            </div>
                         </div>
 
                         <div className="uk-margin">
@@ -146,42 +148,49 @@ const SearchForm = () => {
 
                         <div className="uk-margin">
                             <label className="uk-form-label" htmlFor="form-stacked-text">Sensor ID</label>
-                            <input id="searchSensor"
-                                   className="uk-input"
-                                   name="searchSensor"
-                                   type="number"
-                                   placeholder="Sensor ID"
-                                   min="0"
-                                   max="999999"
-                            />
+                            <div className='uk-form-controls'>
+                                <input id="searchSensor"
+                                       className="uk-input uk-form-small uk-form-width-medium"
+                                       name="searchSensor"
+                                       type="number"
+                                       placeholder="Sensor ID"
+                                       min="0"
+                                       max="999999"
+                                />
+                            </div>
                         </div>
 
                         <div className="uk-margin">
                             <label className="uk-form-label" htmlFor="form-stacked-text">Lens ID</label>
-                            <input id="searchLens"
-                                   className="uk-input"
-                                   name="searchLens"
-                                   type="number"
-                                   placeholder="Lens ID"
-                                   min="0"
-                                   max="999999"
-                            />
+                            <div className='uk-form-controls'>
+                                <input id="searchLens"
+                                       className="uk-input uk-form-small uk-form-width-medium"
+                                       name="searchLens"
+                                       type="number"
+                                       placeholder="Lens ID"
+                                       min="0"
+                                       max="999999"
+                                />
+                            </div>
                         </div>
 
                         <div className="uk-margin">
                             <label className="uk-form-label" htmlFor="form-stacked-text">Content type</label>
-                            <select id="searchContent" className="uk-select" name="searchContent">
-                                <option value="">Not chosen</option>
-                                {
-                                    form.contentTypes.map((type) => (
-                                        <option value={type.type}>{type.type}</option>
-                                    ))
-                                }
-                            </select>
+                            <div className='uk-form-controls'>
+                                <select id="searchContent" className="uk-select uk-form-small uk-form-width-medium" name="searchContent">
+                                    <option value="">Not chosen</option>
+                                    {
+                                        form.contentTypes.map((type) => (
+                                            <option value={type.type}>{type.type}</option>
+                                        ))
+                                    }
+                                </select>
+                            </div>
                         </div>
 
                         <Hidden
                             resourceTypes = {form.resourceTypes}
+                            comment = {false}
                         />
 
                         <p className="uk-text-right">

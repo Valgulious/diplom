@@ -66,23 +66,42 @@ public class SearchController {
     }
 
     @RequestMapping(value = "/download", method = RequestMethod.GET)
-    public void searchDownload (@RequestParam Content[] contents, HttpServletResponse response) throws IOException {
+    public void searchDownload (@RequestParam String searchProject,
+                                @RequestParam String searchPhase,
+                                @RequestParam String searchSettings,
+                                @RequestParam String searchSensor,
+                                @RequestParam String searchLens,
+                                @RequestParam String searchContent,
+                                @RequestParam String searchResource,
+                                @RequestParam String searchColor,
+                                @RequestParam String searchAE,
+                                @RequestParam String searchGain,
+                                @RequestParam String searchShutter,
+                                @RequestParam String searchSubmod, HttpServletResponse response) throws IOException {
+
+        List<Content> contents = contentService.getByCriteria(searchProject,
+                searchPhase,
+                searchSettings,
+                searchSensor,
+                searchLens,
+                searchContent,
+                searchResource,
+                searchColor,
+                searchAE,
+                searchGain,
+                searchShutter,
+                searchSubmod);
+
         response.setStatus(HttpServletResponse.SC_OK);
         response.addHeader("Content-Disposition", "attachment; filename=searching.zip");
 
         ZipOutputStream zipOutputStream = new ZipOutputStream(response.getOutputStream());
 
-        // create a list to add files to be zipped
-//        ArrayList<File> files = new ArrayList<>(2);
-//        files.add(new File("README.md"));
-
-//        List<Content> contents = contentService.getByProject(id);
-
-        // package files
         for (Content content : contents) {
-            //new zip entry and copying inputstream with file to zipOutputStream, after all closing streams
 
-            File file = new File(uploadPath + content.getTitle());
+            String project = projectService.getById(content.getProject()).getTitle();
+
+            File file = new File(uploadPath + project + "/" + content.getTitle());
 
             zipOutputStream.putNextEntry(new ZipEntry(file.getName()));
             FileInputStream fileInputStream = new FileInputStream(file);
